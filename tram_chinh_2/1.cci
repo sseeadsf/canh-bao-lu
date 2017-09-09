@@ -1,4 +1,4 @@
-VERSION:3 SOURCE_TIMESTAMP:4B299066
+VERSION:3 SOURCE_TIMESTAMP:4B299139
 NODE:I LEVEL:0 LINE:1 "D:\Code_vision_3.1\inc\delay.h"
 NODE:I LEVEL:0 LINE:2 "D:\Code_vision_3.1\inc\string.h"
 NODE:I LEVEL:0 LINE:3 "D:\Code_vision_3.1\inc\mega128.h"
@@ -65,6 +65,6 @@ NODE:F LEVEL:0 LINE:180 "put_string(unsigned char * s)"
 NODE:F LEVEL:0 LINE:188 "refresh(int time_ms)"
 NODE:F LEVEL:0 LINE:197 "wait_until(unsigned char * keyword,int time_out_s)"
 NODE:F LEVEL:0 LINE:244 "read_and_send(unsigned char * s)"
-NODE:F LEVEL:0 LINE:343 "print_border(void)"
-NODE:F LEVEL:0 LINE:366 "check_do_rac(int value)"
-NODE:F LEVEL:0 LINE:408 "main(void)"
+NODE:F LEVEL:0 LINE:342 "print_border(void)"
+NODE:F LEVEL:0 LINE:365 "check_do_rac(int value)"
+NODE:F LEVEL:0 LINE:407 "main(void)"

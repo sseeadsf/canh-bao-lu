@@ -38,11 +38,11 @@
 ;unsigned char p=0,lan_bam=0;
 ;int count;
 ;bool flag;
-;unsigned char* key[] = {"4Z7AG6FSEB4HX4UX", "MZS0VOJNPWMKIE67", "PS023R7T7MVUBSEW", "C61VL0Z6IDK6W9RG"};
+;unsigned char* key[] = {"", "4Z7AG6FSEB4HX4UX", "MZS0VOJNPWMKIE67", "PS023R7T7MVUBSEW", "C61VL0Z6IDK6W9RG"};
 
 	.DSEG
 _0x3:
-	.BYTE 0x44
+	.BYTE 0x45
 ;
 ;unsigned int dem=0;
 ;#define CE PORTA.3
@@ -1780,7 +1780,7 @@ _0xCD:
 ; 0000 0138     glcd_outtext(temp);
 ;PCODE: $00000568 VOL: 0
 ;PCODE: $00000569 VOL: 0
-; 0000 0139     delay_ms(3000);
+; 0000 0139     delay_ms(1000);
 ;PCODE: $0000056A VOL: 0
 ;PCODE: $0000056B VOL: 0
 ; 0000 013A 
@@ -1804,7 +1804,7 @@ _0xCD:
 ;PCODE: $00000576 VOL: 0
 ;PCODE: $00000577 VOL: 0
 ; 0000 0142 
-; 0000 0143     if(!wait_until("> ", 10))
+; 0000 0143     if(!wait_until("> ", 5))
 ;PCODE: $00000578 VOL: 0
 ;PCODE: $00000579 VOL: 0
 ;PCODE: $0000057A VOL: 0
@@ -1819,30 +1819,30 @@ _0xCD:
 ;PCODE: $00000582 VOL: 0
 ;PCODE: $00000583 VOL: 0
 ; 0000 0145 
-; 0000 0146     glcd_clear();
+; 0000 0146     put_string(cmd);
 ;PCODE: $00000584 VOL: 0
 ;PCODE: $00000585 VOL: 0
-; 0000 0147     glcd_moveto(0,0);
 ;PCODE: $00000586 VOL: 0
+; 0000 0147     put_string("\r\n");
 ;PCODE: $00000587 VOL: 0
 ;PCODE: $00000588 VOL: 0
 ;PCODE: $00000589 VOL: 0
-; 0000 0148     glcd_outtext("Sending");
+; 0000 0148     delay_ms(1000);
 ;PCODE: $0000058A VOL: 0
 ;PCODE: $0000058B VOL: 0
+; 0000 0149     putchar(0x1A);
 ;PCODE: $0000058C VOL: 0
-; 0000 0149 
-; 0000 014A     put_string(cmd);
 ;PCODE: $0000058D VOL: 0
+; 0000 014A 
+; 0000 014B     glcd_clear();
 ;PCODE: $0000058E VOL: 0
-; 0000 014B     put_string("\r\n");
+; 0000 014C     glcd_moveto(0,0);
 ;PCODE: $0000058F VOL: 0
 ;PCODE: $00000590 VOL: 0
 ;PCODE: $00000591 VOL: 0
-; 0000 014C     delay_ms(1000);
 ;PCODE: $00000592 VOL: 0
+; 0000 014D     glcd_outtext("Sending");
 ;PCODE: $00000593 VOL: 0
-; 0000 014D     putchar(0x1A);
 ;PCODE: $00000594 VOL: 0
 ;PCODE: $00000595 VOL: 0
 ; 0000 014E 
@@ -1864,239 +1864,238 @@ _0xCD:
 ;PCODE: $000005A2 VOL: 0
 ;PCODE: $000005A3 VOL: 0
 ;PCODE: $000005A4 VOL: 0
-; 0000 0152     del_string(cmd);
+; 0000 0152     return true;
 ;PCODE: $000005A5 VOL: 0
 ;PCODE: $000005A6 VOL: 0
 ;PCODE: $000005A7 VOL: 0
-; 0000 0153     return true;
 ;PCODE: $000005A8 VOL: 0
 ;PCODE: $000005A9 VOL: 0
+; 0000 0153 
+; 0000 0154 }
 ;PCODE: $000005AA VOL: 0
-;PCODE: $000005AB VOL: 0
-; 0000 0154 
-; 0000 0155 }
-;PCODE: $000005AC VOL: 0
 
 	.DSEG
 _0xD2:
 	.BYTE 0xA6
 ;
 ;void print_border(){
-; 0000 0157 void print_border(){
+; 0000 0156 void print_border(){
 
 	.CSEG
+;PCODE: $000005AB VOL: 0
+;PCODE: $000005AC VOL: 0
+; 0000 0157     glcd_line(48,0, 48, 15);
 ;PCODE: $000005AD VOL: 0
 ;PCODE: $000005AE VOL: 0
-; 0000 0158     glcd_line(48,0, 48, 15);
 ;PCODE: $000005AF VOL: 0
 ;PCODE: $000005B0 VOL: 0
 ;PCODE: $000005B1 VOL: 0
 ;PCODE: $000005B2 VOL: 0
 ;PCODE: $000005B3 VOL: 0
 ;PCODE: $000005B4 VOL: 0
+; 0000 0158     glcd_line(0, 15, 48, 15);
 ;PCODE: $000005B5 VOL: 0
 ;PCODE: $000005B6 VOL: 0
-; 0000 0159     glcd_line(0, 15, 48, 15);
 ;PCODE: $000005B7 VOL: 0
 ;PCODE: $000005B8 VOL: 0
 ;PCODE: $000005B9 VOL: 0
 ;PCODE: $000005BA VOL: 0
 ;PCODE: $000005BB VOL: 0
 ;PCODE: $000005BC VOL: 0
+; 0000 0159 
+; 0000 015A     glcd_line(0,0,84,0);
 ;PCODE: $000005BD VOL: 0
 ;PCODE: $000005BE VOL: 0
-; 0000 015A 
-; 0000 015B     glcd_line(0,0,84,0);
 ;PCODE: $000005BF VOL: 0
 ;PCODE: $000005C0 VOL: 0
 ;PCODE: $000005C1 VOL: 0
 ;PCODE: $000005C2 VOL: 0
 ;PCODE: $000005C3 VOL: 0
 ;PCODE: $000005C4 VOL: 0
+; 0000 015B     glcd_line(84,0, 84, 48);
 ;PCODE: $000005C5 VOL: 0
 ;PCODE: $000005C6 VOL: 0
-; 0000 015C     glcd_line(84,0, 84, 48);
 ;PCODE: $000005C7 VOL: 0
 ;PCODE: $000005C8 VOL: 0
 ;PCODE: $000005C9 VOL: 0
 ;PCODE: $000005CA VOL: 0
 ;PCODE: $000005CB VOL: 0
 ;PCODE: $000005CC VOL: 0
+; 0000 015C     glcd_line(0, 48, 84, 48);
 ;PCODE: $000005CD VOL: 0
 ;PCODE: $000005CE VOL: 0
-; 0000 015D     glcd_line(0, 48, 84, 48);
 ;PCODE: $000005CF VOL: 0
 ;PCODE: $000005D0 VOL: 0
 ;PCODE: $000005D1 VOL: 0
 ;PCODE: $000005D2 VOL: 0
 ;PCODE: $000005D3 VOL: 0
 ;PCODE: $000005D4 VOL: 0
+; 0000 015D     glcd_line(0, 0, 0, 48);
 ;PCODE: $000005D5 VOL: 0
 ;PCODE: $000005D6 VOL: 0
-; 0000 015E     glcd_line(0, 0, 0, 48);
 ;PCODE: $000005D7 VOL: 0
 ;PCODE: $000005D8 VOL: 0
 ;PCODE: $000005D9 VOL: 0
 ;PCODE: $000005DA VOL: 0
 ;PCODE: $000005DB VOL: 0
 ;PCODE: $000005DC VOL: 0
+; 0000 015E     glcd_moveto(3,3);
 ;PCODE: $000005DD VOL: 0
 ;PCODE: $000005DE VOL: 0
-; 0000 015F     glcd_moveto(3,3);
 ;PCODE: $000005DF VOL: 0
 ;PCODE: $000005E0 VOL: 0
+; 0000 015F     glcd_outtext("Node: ");
 ;PCODE: $000005E1 VOL: 0
 ;PCODE: $000005E2 VOL: 0
-; 0000 0160     glcd_outtext("Node: ");
 ;PCODE: $000005E3 VOL: 0
+; 0000 0160 
+; 0000 0161     glcd_moveto(4, 18);
 ;PCODE: $000005E4 VOL: 0
 ;PCODE: $000005E5 VOL: 0
-; 0000 0161 
-; 0000 0162     glcd_moveto(4, 18);
 ;PCODE: $000005E6 VOL: 0
 ;PCODE: $000005E7 VOL: 0
+; 0000 0162     glcd_outtext("Temp: ");
 ;PCODE: $000005E8 VOL: 0
 ;PCODE: $000005E9 VOL: 0
-; 0000 0163     glcd_outtext("Temp: ");
 ;PCODE: $000005EA VOL: 0
+; 0000 0163     glcd_moveto(4, 28);
 ;PCODE: $000005EB VOL: 0
 ;PCODE: $000005EC VOL: 0
-; 0000 0164     glcd_moveto(4, 28);
 ;PCODE: $000005ED VOL: 0
 ;PCODE: $000005EE VOL: 0
+; 0000 0164     glcd_outtext("Humid: ");
 ;PCODE: $000005EF VOL: 0
 ;PCODE: $000005F0 VOL: 0
-; 0000 0165     glcd_outtext("Humid: ");
 ;PCODE: $000005F1 VOL: 0
+; 0000 0165     glcd_moveto(4, 37);
 ;PCODE: $000005F2 VOL: 0
 ;PCODE: $000005F3 VOL: 0
-; 0000 0166     glcd_moveto(4, 37);
 ;PCODE: $000005F4 VOL: 0
 ;PCODE: $000005F5 VOL: 0
+; 0000 0166     glcd_outtext("Water: ");
 ;PCODE: $000005F6 VOL: 0
 ;PCODE: $000005F7 VOL: 0
-; 0000 0167     glcd_outtext("Water: ");
 ;PCODE: $000005F8 VOL: 0
+; 0000 0167     glcd_moveto(67, 28);
 ;PCODE: $000005F9 VOL: 0
 ;PCODE: $000005FA VOL: 0
-; 0000 0168     glcd_moveto(67, 28);
 ;PCODE: $000005FB VOL: 0
 ;PCODE: $000005FC VOL: 0
+; 0000 0168     glcd_putchar(37);
 ;PCODE: $000005FD VOL: 0
 ;PCODE: $000005FE VOL: 0
-; 0000 0169     glcd_putchar(37);
+; 0000 0169     glcd_moveto(67, 37);
 ;PCODE: $000005FF VOL: 0
 ;PCODE: $00000600 VOL: 0
-; 0000 016A     glcd_moveto(67, 37);
 ;PCODE: $00000601 VOL: 0
 ;PCODE: $00000602 VOL: 0
+; 0000 016A     glcd_outtext("mm");
 ;PCODE: $00000603 VOL: 0
 ;PCODE: $00000604 VOL: 0
-; 0000 016B     glcd_outtext("mm");
 ;PCODE: $00000605 VOL: 0
+; 0000 016B }
 ;PCODE: $00000606 VOL: 0
 ;PCODE: $00000607 VOL: 0
-; 0000 016C }
-;PCODE: $00000608 VOL: 0
-;PCODE: $00000609 VOL: 0
 
 	.DSEG
 _0xD6:
 	.BYTE 0x21
 ;
 ;void check_do_rac(int value){
-; 0000 016E void check_do_rac(int value){
+; 0000 016D void check_do_rac(int value){
 
 	.CSEG
+;PCODE: $00000608 VOL: 0
+;PCODE: $00000609 VOL: 0
+; 0000 016E     if(value == 1)
 ;PCODE: $0000060A VOL: 0
-;PCODE: $0000060B VOL: 0
-; 0000 016F     if(value == 1)
-;PCODE: $0000060C VOL: 0
 ;	value -> Y+0
+;PCODE: $0000060B VOL: 0
+;PCODE: $0000060C VOL: 0
 ;PCODE: $0000060D VOL: 0
+; 0000 016F         P_Add = 0xA1;
 ;PCODE: $0000060E VOL: 0
 ;PCODE: $0000060F VOL: 0
-; 0000 0170         P_Add = 0xA1;
+; 0000 0170     else if(value == 2)
 ;PCODE: $00000610 VOL: 0
 ;PCODE: $00000611 VOL: 0
-; 0000 0171     else if(value == 2)
 ;PCODE: $00000612 VOL: 0
 ;PCODE: $00000613 VOL: 0
 ;PCODE: $00000614 VOL: 0
+; 0000 0171         P_Add = 0xA2;
 ;PCODE: $00000615 VOL: 0
 ;PCODE: $00000616 VOL: 0
-; 0000 0172         P_Add = 0xA2;
+; 0000 0172     else if(value == 3)
 ;PCODE: $00000617 VOL: 0
 ;PCODE: $00000618 VOL: 0
-; 0000 0173     else if(value == 3)
 ;PCODE: $00000619 VOL: 0
 ;PCODE: $0000061A VOL: 0
 ;PCODE: $0000061B VOL: 0
+; 0000 0173         P_Add = 0xA3;
 ;PCODE: $0000061C VOL: 0
 ;PCODE: $0000061D VOL: 0
-; 0000 0174         P_Add = 0xA3;
+; 0000 0174     else
 ;PCODE: $0000061E VOL: 0
 ;PCODE: $0000061F VOL: 0
-; 0000 0175     else
+; 0000 0175         P_Add = 0xA4;
 ;PCODE: $00000620 VOL: 0
 ;PCODE: $00000621 VOL: 0
-; 0000 0176         P_Add = 0xA4;
+; 0000 0176     RF_Config_TX();
 ;PCODE: $00000622 VOL: 0
 ;PCODE: $00000623 VOL: 0
-; 0000 0177     RF_Config_TX();
 ;PCODE: $00000624 VOL: 0
 ;PCODE: $00000625 VOL: 0
+; 0000 0177     RF_Mode_TX();
 ;PCODE: $00000626 VOL: 0
+; 0000 0178     RF_Send_TX(data_send);
 ;PCODE: $00000627 VOL: 0
-; 0000 0178     RF_Mode_TX();
 ;PCODE: $00000628 VOL: 0
-; 0000 0179     RF_Send_TX(data_send);
 ;PCODE: $00000629 VOL: 0
+; 0000 0179     delay_ms(100);
 ;PCODE: $0000062A VOL: 0
 ;PCODE: $0000062B VOL: 0
-; 0000 017A     delay_ms(100);
 ;PCODE: $0000062C VOL: 0
+; 0000 017A     RF_Send_TX(data_send);
 ;PCODE: $0000062D VOL: 0
 ;PCODE: $0000062E VOL: 0
-; 0000 017B     RF_Send_TX(data_send);
 ;PCODE: $0000062F VOL: 0
+; 0000 017B     delay_ms(500);
 ;PCODE: $00000630 VOL: 0
 ;PCODE: $00000631 VOL: 0
-; 0000 017C     delay_ms(500);
+; 0000 017C     RF_Config_RX_2();
 ;PCODE: $00000632 VOL: 0
+; 0000 017D     RF_Mode_RX();
 ;PCODE: $00000633 VOL: 0
-; 0000 017D     RF_Config_RX_2();
+; 0000 017E         if(IRQ == 0){
 ;PCODE: $00000634 VOL: 0
-; 0000 017E     RF_Mode_RX();
 ;PCODE: $00000635 VOL: 0
-; 0000 017F         if(IRQ == 0){
 ;PCODE: $00000636 VOL: 0
+; 0000 017F            RF_Read_RX_3();
 ;PCODE: $00000637 VOL: 0
+; 0000 0180            print_border();
 ;PCODE: $00000638 VOL: 0
-; 0000 0180            RF_Read_RX_3();
+; 0000 0181            //if(station_receive.flag == count){
+; 0000 0182             glcd_moveto(40, 3);
 ;PCODE: $00000639 VOL: 0
-; 0000 0181            print_border();
 ;PCODE: $0000063A VOL: 0
-; 0000 0182            //if(station_receive.flag == count){
-; 0000 0183             glcd_moveto(40, 3);
 ;PCODE: $0000063B VOL: 0
 ;PCODE: $0000063C VOL: 0
+; 0000 0183             itoa(station_receive.flag, buff);
 ;PCODE: $0000063D VOL: 0
 ;PCODE: $0000063E VOL: 0
-; 0000 0184             itoa(station_receive.flag, buff);
 ;PCODE: $0000063F VOL: 0
 ;PCODE: $00000640 VOL: 0
+; 0000 0184             glcd_outtext(buff);
 ;PCODE: $00000641 VOL: 0
 ;PCODE: $00000642 VOL: 0
-; 0000 0185             glcd_outtext(buff);
+; 0000 0185             glcd_moveto(46, 18);
 ;PCODE: $00000643 VOL: 0
 ;PCODE: $00000644 VOL: 0
-; 0000 0186             glcd_moveto(46, 18);
 ;PCODE: $00000645 VOL: 0
 ;PCODE: $00000646 VOL: 0
+; 0000 0186             sprintf(buff, "%d ", station_receive.temp);
 ;PCODE: $00000647 VOL: 0
 ;PCODE: $00000648 VOL: 0
-; 0000 0187             sprintf(buff, "%d ", station_receive.temp);
 ;PCODE: $00000649 VOL: 0
 ;PCODE: $0000064A VOL: 0
 ;PCODE: $0000064B VOL: 0
@@ -2108,17 +2107,17 @@ _0xD6:
 ;PCODE: $00000651 VOL: 0
 ;PCODE: $00000652 VOL: 0
 ;PCODE: $00000653 VOL: 0
+; 0000 0187             glcd_outtext(buff);
 ;PCODE: $00000654 VOL: 0
 ;PCODE: $00000655 VOL: 0
-; 0000 0188             glcd_outtext(buff);
+; 0000 0188             glcd_moveto(46, 28);
 ;PCODE: $00000656 VOL: 0
 ;PCODE: $00000657 VOL: 0
-; 0000 0189             glcd_moveto(46, 28);
 ;PCODE: $00000658 VOL: 0
 ;PCODE: $00000659 VOL: 0
+; 0000 0189             sprintf(buff, "%d ", station_receive.humi);
 ;PCODE: $0000065A VOL: 0
 ;PCODE: $0000065B VOL: 0
-; 0000 018A             sprintf(buff, "%d ", station_receive.humi);
 ;PCODE: $0000065C VOL: 0
 ;PCODE: $0000065D VOL: 0
 ;PCODE: $0000065E VOL: 0
@@ -2130,17 +2129,17 @@ _0xD6:
 ;PCODE: $00000664 VOL: 0
 ;PCODE: $00000665 VOL: 0
 ;PCODE: $00000666 VOL: 0
+; 0000 018A             glcd_outtext(buff);
 ;PCODE: $00000667 VOL: 0
 ;PCODE: $00000668 VOL: 0
-; 0000 018B             glcd_outtext(buff);
+; 0000 018B             glcd_moveto(46, 37);
 ;PCODE: $00000669 VOL: 0
 ;PCODE: $0000066A VOL: 0
-; 0000 018C             glcd_moveto(46, 37);
 ;PCODE: $0000066B VOL: 0
 ;PCODE: $0000066C VOL: 0
+; 0000 018C             sprintf(buff, "%d  ", station_receive.water);
 ;PCODE: $0000066D VOL: 0
 ;PCODE: $0000066E VOL: 0
-; 0000 018D             sprintf(buff, "%d  ", station_receive.water);
 ;PCODE: $0000066F VOL: 0
 ;PCODE: $00000670 VOL: 0
 ;PCODE: $00000671 VOL: 0
@@ -2152,500 +2151,500 @@ _0xD6:
 ;PCODE: $00000677 VOL: 0
 ;PCODE: $00000678 VOL: 0
 ;PCODE: $00000679 VOL: 0
+; 0000 018D             glcd_outtext(buff);
 ;PCODE: $0000067A VOL: 0
 ;PCODE: $0000067B VOL: 0
-; 0000 018E             glcd_outtext(buff);
+; 0000 018E             delay_ms(2000);
 ;PCODE: $0000067C VOL: 0
 ;PCODE: $0000067D VOL: 0
-; 0000 018F             delay_ms(2000);
+; 0000 018F             /*count++;
+; 0000 0190             if(count == 5)
+; 0000 0191                 count = 1;
+; 0000 0192         }     */
+; 0000 0193 
+; 0000 0194         }
+; 0000 0195     }
 ;PCODE: $0000067E VOL: 0
 ;PCODE: $0000067F VOL: 0
-; 0000 0190             /*count++;
-; 0000 0191             if(count == 5)
-; 0000 0192                 count = 1;
-; 0000 0193         }     */
-; 0000 0194 
-; 0000 0195         }
-; 0000 0196     }
 ;PCODE: $00000680 VOL: 0
 ;PCODE: $00000681 VOL: 0
-;PCODE: $00000682 VOL: 0
-;PCODE: $00000683 VOL: 0
 ;
 ;void main(void) {
-; 0000 0198 void main(void) {
-;PCODE: $00000684 VOL: 0
-; 0000 0199 
-; 0000 019A // Declare your local variables here
-; 0000 019B // Variable used to store graphic display
-; 0000 019C // controller initialization data
-; 0000 019D     GLCDINIT_t glcd_init_data;
-; 0000 019E 
-; 0000 019F DDRA=(0<<DDA7) | (1<<DDA6) | (0<<DDA5) | (1<<DDA4) | (1<<DDA3) | (1<<DDA2) | (1<<DDA1) | (0<<DDA0);
-;PCODE: $00000685 VOL: 0
+; 0000 0197 void main(void) {
+;PCODE: $00000682 VOL: 0
+; 0000 0198 
+; 0000 0199 // Declare your local variables here
+; 0000 019A // Variable used to store graphic display
+; 0000 019B // controller initialization data
+; 0000 019C     GLCDINIT_t glcd_init_data;
+; 0000 019D 
+; 0000 019E DDRA=(0<<DDA7) | (1<<DDA6) | (0<<DDA5) | (1<<DDA4) | (1<<DDA3) | (1<<DDA2) | (1<<DDA1) | (0<<DDA0);
+;PCODE: $00000683 VOL: 0
 ;	glcd_init_data -> Y+0
+;PCODE: $00000684 VOL: 0
+;PCODE: $00000685 VOL: 0
+; 0000 019F // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 01A0 PORTA=(0<<PORTA7) | (0<<PORTA6) | (1<<PORTA5) | (1<<PORTA4) | (1<<PORTA3) | (1<<PORTA2) | (1<<PORTA1) | (1<<PORTA0);
 ;PCODE: $00000686 VOL: 0
 ;PCODE: $00000687 VOL: 0
-; 0000 01A0 // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 01A1 PORTA=(0<<PORTA7) | (0<<PORTA6) | (1<<PORTA5) | (1<<PORTA4) | (1<<PORTA3) | (1<<PORTA2) | (1<<PORTA1) | (1<<PORTA0);
+; 0000 01A1 // Port B initialization
+; 0000 01A2 // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 01A3     DDRB=(0<<DDB7) | (0<<DDB6) | (0<<DDB5) | (0<<DDB4) | (1<<DDB3) | (0<<DDB2) | (0<<DDB1) | (0<<DDB0);
 ;PCODE: $00000688 VOL: 0
 ;PCODE: $00000689 VOL: 0
-; 0000 01A2 // Port B initialization
-; 0000 01A3 // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-; 0000 01A4     DDRB=(0<<DDB7) | (0<<DDB6) | (0<<DDB5) | (0<<DDB4) | (1<<DDB3) | (0<<DDB2) | (0<<DDB1) | (0<<DDB0);
+; 0000 01A4 // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 01A5     PORTB=(0<<PORTB7) | (0<<PORTB6) | (0<<PORTB5) | (0<<PORTB4) | (0<<PORTB3) | (0<<PORTB2) | (0<<PORTB1) | (0<<PORTB0);
 ;PCODE: $0000068A VOL: 0
 ;PCODE: $0000068B VOL: 0
-; 0000 01A5 // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 01A6     PORTB=(0<<PORTB7) | (0<<PORTB6) | (0<<PORTB5) | (0<<PORTB4) | (0<<PORTB3) | (0<<PORTB2) | (0<<PORTB1) | (0<<PORTB0);
+; 0000 01A6 
+; 0000 01A7 // Port C initialization
+; 0000 01A8 // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 01A9     DDRC=(0<<DDC7) | (0<<DDC6) | (0<<DDC5) | (0<<DDC4) | (0<<DDC3) | (0<<DDC2) | (0<<DDC1) | (0<<DDC0);
 ;PCODE: $0000068C VOL: 0
 ;PCODE: $0000068D VOL: 0
-; 0000 01A7 
-; 0000 01A8 // Port C initialization
-; 0000 01A9 // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-; 0000 01AA     DDRC=(0<<DDC7) | (0<<DDC6) | (0<<DDC5) | (0<<DDC4) | (0<<DDC3) | (0<<DDC2) | (0<<DDC1) | (0<<DDC0);
+; 0000 01AA // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 01AB     PORTC=(0<<PORTC7) | (0<<PORTC6) | (0<<PORTC5) | (0<<PORTC4) | (1<<PORTC3) | (0<<PORTC2) | (0<<PORTC1) | (0<<PORTC0);
 ;PCODE: $0000068E VOL: 0
 ;PCODE: $0000068F VOL: 0
-; 0000 01AB // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 01AC     PORTC=(0<<PORTC7) | (0<<PORTC6) | (0<<PORTC5) | (0<<PORTC4) | (1<<PORTC3) | (0<<PORTC2) | (0<<PORTC1) | (0<<PORTC0);
+; 0000 01AC 
+; 0000 01AD // Port D initialization
+; 0000 01AE // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 01AF     DDRD=(0<<DDD7) | (0<<DDD6) | (0<<DDD5) | (0<<DDD4) | (0<<DDD3) | (0<<DDD2) | (0<<DDD1) | (0<<DDD0);
 ;PCODE: $00000690 VOL: 0
 ;PCODE: $00000691 VOL: 0
-; 0000 01AD 
-; 0000 01AE // Port D initialization
-; 0000 01AF // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-; 0000 01B0     DDRD=(0<<DDD7) | (0<<DDD6) | (0<<DDD5) | (0<<DDD4) | (0<<DDD3) | (0<<DDD2) | (0<<DDD1) | (0<<DDD0);
+; 0000 01B0 // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 01B1     PORTD=(0<<PORTD7) | (0<<PORTD6) | (0<<PORTD5) | (0<<PORTD4) | (0<<PORTD3) | (0<<PORTD2) | (0<<PORTD1) | (0<<PORTD0);
 ;PCODE: $00000692 VOL: 0
 ;PCODE: $00000693 VOL: 0
-; 0000 01B1 // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 01B2     PORTD=(0<<PORTD7) | (0<<PORTD6) | (0<<PORTD5) | (0<<PORTD4) | (0<<PORTD3) | (0<<PORTD2) | (0<<PORTD1) | (0<<PORTD0);
+; 0000 01B2 
+; 0000 01B3 // Port E initialization
+; 0000 01B4 // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 01B5     DDRE=(0<<DDE7) | (0<<DDE6) | (0<<DDE5) | (0<<DDE4) | (0<<DDE3) | (0<<DDE2) | (0<<DDE1) | (0<<DDE0);
 ;PCODE: $00000694 VOL: 0
 ;PCODE: $00000695 VOL: 0
-; 0000 01B3 
-; 0000 01B4 // Port E initialization
-; 0000 01B5 // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-; 0000 01B6     DDRE=(0<<DDE7) | (0<<DDE6) | (0<<DDE5) | (0<<DDE4) | (0<<DDE3) | (0<<DDE2) | (0<<DDE1) | (0<<DDE0);
+; 0000 01B6 // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 01B7     PORTE=(0<<PORTE7) | (0<<PORTE6) | (0<<PORTE5) | (0<<PORTE4) | (0<<PORTE3) | (0<<PORTE2) | (0<<PORTE1) | (0<<PORTE0);
 ;PCODE: $00000696 VOL: 0
 ;PCODE: $00000697 VOL: 0
-; 0000 01B7 // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 01B8     PORTE=(0<<PORTE7) | (0<<PORTE6) | (0<<PORTE5) | (0<<PORTE4) | (0<<PORTE3) | (0<<PORTE2) | (0<<PORTE1) | (0<<PORTE0);
+; 0000 01B8 
+; 0000 01B9 // Port F initialization
+; 0000 01BA // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 01BB     DDRF=(0<<DDF7) | (0<<DDF6) | (0<<DDF5) | (0<<DDF4) | (0<<DDF3) | (0<<DDF2) | (0<<DDF1) | (0<<DDF0);
 ;PCODE: $00000698 VOL: 0
 ;PCODE: $00000699 VOL: 0
-; 0000 01B9 
-; 0000 01BA // Port F initialization
-; 0000 01BB // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-; 0000 01BC     DDRF=(0<<DDF7) | (0<<DDF6) | (0<<DDF5) | (0<<DDF4) | (0<<DDF3) | (0<<DDF2) | (0<<DDF1) | (0<<DDF0);
+; 0000 01BC // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 01BD     PORTF=(0<<PORTF7) | (0<<PORTF6) | (0<<PORTF5) | (0<<PORTF4) | (0<<PORTF3) | (0<<PORTF2) | (0<<PORTF1) | (0<<PORTF0);
 ;PCODE: $0000069A VOL: 0
 ;PCODE: $0000069B VOL: 0
-; 0000 01BD // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 01BE     PORTF=(0<<PORTF7) | (0<<PORTF6) | (0<<PORTF5) | (0<<PORTF4) | (0<<PORTF3) | (0<<PORTF2) | (0<<PORTF1) | (0<<PORTF0);
+; 0000 01BE 
+; 0000 01BF // Port G initialization
+; 0000 01C0 // Function: Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 01C1     DDRG=(0<<DDG4) | (0<<DDG3) | (0<<DDG2) | (0<<DDG1) | (0<<DDG0);
 ;PCODE: $0000069C VOL: 0
 ;PCODE: $0000069D VOL: 0
-; 0000 01BF 
-; 0000 01C0 // Port G initialization
-; 0000 01C1 // Function: Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-; 0000 01C2     DDRG=(0<<DDG4) | (0<<DDG3) | (0<<DDG2) | (0<<DDG1) | (0<<DDG0);
+; 0000 01C2 // State: Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 01C3     PORTG=(0<<PORTG4) | (0<<PORTG3) | (0<<PORTG2) | (0<<PORTG1) | (0<<PORTG0);
 ;PCODE: $0000069E VOL: 0
 ;PCODE: $0000069F VOL: 0
-; 0000 01C3 // State: Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 01C4     PORTG=(0<<PORTG4) | (0<<PORTG3) | (0<<PORTG2) | (0<<PORTG1) | (0<<PORTG0);
+; 0000 01C4 
+; 0000 01C5 // Timer/Counter 0 initialization
+; 0000 01C6 // Clock source: System Clock
+; 0000 01C7 // Clock value: 8000.000 kHz
+; 0000 01C8 // Mode: Normal top=0xFF
+; 0000 01C9 // OC0 output: Disconnected
+; 0000 01CA // Timer Period: 0.02 ms
+; 0000 01CB 
+; 0000 01CC         ASSR=0<<AS0;
 ;PCODE: $000006A0 VOL: 0
 ;PCODE: $000006A1 VOL: 0
-; 0000 01C5 
-; 0000 01C6 // Timer/Counter 0 initialization
-; 0000 01C7 // Clock source: System Clock
-; 0000 01C8 // Clock value: 8000.000 kHz
-; 0000 01C9 // Mode: Normal top=0xFF
-; 0000 01CA // OC0 output: Disconnected
-; 0000 01CB // Timer Period: 0.02 ms
-; 0000 01CC 
-; 0000 01CD         ASSR=0<<AS0;
+; 0000 01CD         TCCR0=(0<<WGM00) | (0<<COM01) | (0<<COM00) | (0<<WGM01) | (0<<CS02) | (0<<CS01) | (1<<CS00);
 ;PCODE: $000006A2 VOL: 0
 ;PCODE: $000006A3 VOL: 0
-; 0000 01CE         TCCR0=(0<<WGM00) | (0<<COM01) | (0<<COM00) | (0<<WGM01) | (0<<CS02) | (0<<CS01) | (1<<CS00);
+; 0000 01CE         TCNT0=0x60;
 ;PCODE: $000006A4 VOL: 0
 ;PCODE: $000006A5 VOL: 0
-; 0000 01CF         TCNT0=0x60;
+; 0000 01CF         OCR0=0x00;
 ;PCODE: $000006A6 VOL: 0
 ;PCODE: $000006A7 VOL: 0
-; 0000 01D0         OCR0=0x00;
+; 0000 01D0 
+; 0000 01D1 // Timer/Counter 1 initialization
+; 0000 01D2 // Clock source: System Clock
+; 0000 01D3 // Clock value: Timer1 Stopped
+; 0000 01D4 // Mode: Normal top=0xFFFF
+; 0000 01D5 // OC1A output: Disconnected
+; 0000 01D6 // OC1B output: Disconnected
+; 0000 01D7 // OC1C output: Disconnected
+; 0000 01D8 // Noise Canceler: Off
+; 0000 01D9 // Input Capture on Falling Edge
+; 0000 01DA // Timer1 Overflow Interrupt: Off
+; 0000 01DB // Input Capture Interrupt: Off
+; 0000 01DC // Compare A Match Interrupt: Off
+; 0000 01DD // Compare B Match Interrupt: Off
+; 0000 01DE // Compare C Match Interrupt: Off
+; 0000 01DF     TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<COM1C1) | (0<<COM1C0) | (0<<WGM11) | (0<<WGM10);
 ;PCODE: $000006A8 VOL: 0
 ;PCODE: $000006A9 VOL: 0
-; 0000 01D1 
-; 0000 01D2 // Timer/Counter 1 initialization
-; 0000 01D3 // Clock source: System Clock
-; 0000 01D4 // Clock value: Timer1 Stopped
-; 0000 01D5 // Mode: Normal top=0xFFFF
-; 0000 01D6 // OC1A output: Disconnected
-; 0000 01D7 // OC1B output: Disconnected
-; 0000 01D8 // OC1C output: Disconnected
-; 0000 01D9 // Noise Canceler: Off
-; 0000 01DA // Input Capture on Falling Edge
-; 0000 01DB // Timer1 Overflow Interrupt: Off
-; 0000 01DC // Input Capture Interrupt: Off
-; 0000 01DD // Compare A Match Interrupt: Off
-; 0000 01DE // Compare B Match Interrupt: Off
-; 0000 01DF // Compare C Match Interrupt: Off
-; 0000 01E0     TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<COM1C1) | (0<<COM1C0) | (0<<WGM11) | (0<<WGM10);
+; 0000 01E0     TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (0<<WGM12) | (0<<CS12) | (0<<CS11) | (0<<CS10);
 ;PCODE: $000006AA VOL: 0
 ;PCODE: $000006AB VOL: 0
-; 0000 01E1     TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (0<<WGM12) | (0<<CS12) | (0<<CS11) | (0<<CS10);
+; 0000 01E1     TCNT1H=0x00;
 ;PCODE: $000006AC VOL: 0
 ;PCODE: $000006AD VOL: 0
-; 0000 01E2     TCNT1H=0x00;
+; 0000 01E2     TCNT1L=0x00;
 ;PCODE: $000006AE VOL: 0
 ;PCODE: $000006AF VOL: 0
-; 0000 01E3     TCNT1L=0x00;
+; 0000 01E3     ICR1H=0x00;
 ;PCODE: $000006B0 VOL: 0
 ;PCODE: $000006B1 VOL: 0
-; 0000 01E4     ICR1H=0x00;
+; 0000 01E4     ICR1L=0x00;
 ;PCODE: $000006B2 VOL: 0
 ;PCODE: $000006B3 VOL: 0
-; 0000 01E5     ICR1L=0x00;
+; 0000 01E5     OCR1AH=0x00;
 ;PCODE: $000006B4 VOL: 0
 ;PCODE: $000006B5 VOL: 0
-; 0000 01E6     OCR1AH=0x00;
+; 0000 01E6     OCR1AL=0x00;
 ;PCODE: $000006B6 VOL: 0
 ;PCODE: $000006B7 VOL: 0
-; 0000 01E7     OCR1AL=0x00;
+; 0000 01E7     OCR1BH=0x00;
 ;PCODE: $000006B8 VOL: 0
 ;PCODE: $000006B9 VOL: 0
-; 0000 01E8     OCR1BH=0x00;
+; 0000 01E8     OCR1BL=0x00;
 ;PCODE: $000006BA VOL: 0
 ;PCODE: $000006BB VOL: 0
-; 0000 01E9     OCR1BL=0x00;
+; 0000 01E9     OCR1CH=0x00;
 ;PCODE: $000006BC VOL: 0
 ;PCODE: $000006BD VOL: 0
-; 0000 01EA     OCR1CH=0x00;
+; 0000 01EA     OCR1CL=0x00;
 ;PCODE: $000006BE VOL: 0
 ;PCODE: $000006BF VOL: 0
-; 0000 01EB     OCR1CL=0x00;
+; 0000 01EB 
+; 0000 01EC // Timer/Counter 2 initialization
+; 0000 01ED // Clock source: System Clock
+; 0000 01EE // Clock value: 7.813 kHz
+; 0000 01EF // Mode: Normal top=0xFF
+; 0000 01F0 // OC2 output: Disconnected
+; 0000 01F1 // Timer Period: 9.984 ms
+; 0000 01F2 TCCR2=(0<<WGM20) | (0<<COM21) | (0<<COM20) | (0<<WGM21) | (1<<CS22) | (0<<CS21) | (1<<CS20);
 ;PCODE: $000006C0 VOL: 0
 ;PCODE: $000006C1 VOL: 0
-; 0000 01EC 
-; 0000 01ED // Timer/Counter 2 initialization
-; 0000 01EE // Clock source: System Clock
-; 0000 01EF // Clock value: 7.813 kHz
-; 0000 01F0 // Mode: Normal top=0xFF
-; 0000 01F1 // OC2 output: Disconnected
-; 0000 01F2 // Timer Period: 9.984 ms
-; 0000 01F3 TCCR2=(0<<WGM20) | (0<<COM21) | (0<<COM20) | (0<<WGM21) | (1<<CS22) | (0<<CS21) | (1<<CS20);
+; 0000 01F3 TCNT2=0xB2;
 ;PCODE: $000006C2 VOL: 0
 ;PCODE: $000006C3 VOL: 0
-; 0000 01F4 TCNT2=0xB2;
+; 0000 01F4 OCR2=0x00;
 ;PCODE: $000006C4 VOL: 0
 ;PCODE: $000006C5 VOL: 0
-; 0000 01F5 OCR2=0x00;
+; 0000 01F5 
+; 0000 01F6 // Timer/Counter 3 initialization
+; 0000 01F7 // Clock source: System Clock
+; 0000 01F8 // Clock value: Timer3 Stopped
+; 0000 01F9 // Mode: Normal top=0xFFFF
+; 0000 01FA // OC3A output: Disconnected
+; 0000 01FB // OC3B output: Disconnected
+; 0000 01FC // OC3C output: Disconnected
+; 0000 01FD // Noise Canceler: Off
+; 0000 01FE // Input Capture on Falling Edge
+; 0000 01FF // Timer3 Overflow Interrupt: Off
+; 0000 0200 // Input Capture Interrupt: Off
+; 0000 0201 // Compare A Match Interrupt: Off
+; 0000 0202 // Compare B Match Interrupt: Off
+; 0000 0203 // Compare C Match Interrupt: Off
+; 0000 0204     TCCR3A=(0<<COM3A1) | (0<<COM3A0) | (0<<COM3B1) | (0<<COM3B0) | (0<<COM3C1) | (0<<COM3C0) | (0<<WGM31) | (0<<WGM30);
 ;PCODE: $000006C6 VOL: 0
 ;PCODE: $000006C7 VOL: 0
-; 0000 01F6 
-; 0000 01F7 // Timer/Counter 3 initialization
-; 0000 01F8 // Clock source: System Clock
-; 0000 01F9 // Clock value: Timer3 Stopped
-; 0000 01FA // Mode: Normal top=0xFFFF
-; 0000 01FB // OC3A output: Disconnected
-; 0000 01FC // OC3B output: Disconnected
-; 0000 01FD // OC3C output: Disconnected
-; 0000 01FE // Noise Canceler: Off
-; 0000 01FF // Input Capture on Falling Edge
-; 0000 0200 // Timer3 Overflow Interrupt: Off
-; 0000 0201 // Input Capture Interrupt: Off
-; 0000 0202 // Compare A Match Interrupt: Off
-; 0000 0203 // Compare B Match Interrupt: Off
-; 0000 0204 // Compare C Match Interrupt: Off
-; 0000 0205     TCCR3A=(0<<COM3A1) | (0<<COM3A0) | (0<<COM3B1) | (0<<COM3B0) | (0<<COM3C1) | (0<<COM3C0) | (0<<WGM31) | (0<<WGM30);
+; 0000 0205     TCCR3B=(0<<ICNC3) | (0<<ICES3) | (0<<WGM33) | (0<<WGM32) | (0<<CS32) | (0<<CS31) | (0<<CS30);
 ;PCODE: $000006C8 VOL: 0
 ;PCODE: $000006C9 VOL: 0
-; 0000 0206     TCCR3B=(0<<ICNC3) | (0<<ICES3) | (0<<WGM33) | (0<<WGM32) | (0<<CS32) | (0<<CS31) | (0<<CS30);
+; 0000 0206     TCNT3H=0x00;
 ;PCODE: $000006CA VOL: 0
 ;PCODE: $000006CB VOL: 0
-; 0000 0207     TCNT3H=0x00;
+; 0000 0207     TCNT3L=0x00;
 ;PCODE: $000006CC VOL: 0
 ;PCODE: $000006CD VOL: 0
-; 0000 0208     TCNT3L=0x00;
+; 0000 0208     ICR3H=0x00;
 ;PCODE: $000006CE VOL: 0
 ;PCODE: $000006CF VOL: 0
-; 0000 0209     ICR3H=0x00;
+; 0000 0209     ICR3L=0x00;
 ;PCODE: $000006D0 VOL: 0
 ;PCODE: $000006D1 VOL: 0
-; 0000 020A     ICR3L=0x00;
+; 0000 020A     OCR3AH=0x00;
 ;PCODE: $000006D2 VOL: 0
 ;PCODE: $000006D3 VOL: 0
-; 0000 020B     OCR3AH=0x00;
+; 0000 020B     OCR3AL=0x00;
 ;PCODE: $000006D4 VOL: 0
 ;PCODE: $000006D5 VOL: 0
-; 0000 020C     OCR3AL=0x00;
+; 0000 020C     OCR3BH=0x00;
 ;PCODE: $000006D6 VOL: 0
 ;PCODE: $000006D7 VOL: 0
-; 0000 020D     OCR3BH=0x00;
+; 0000 020D     OCR3BL=0x00;
 ;PCODE: $000006D8 VOL: 0
 ;PCODE: $000006D9 VOL: 0
-; 0000 020E     OCR3BL=0x00;
+; 0000 020E     OCR3CH=0x00;
 ;PCODE: $000006DA VOL: 0
 ;PCODE: $000006DB VOL: 0
-; 0000 020F     OCR3CH=0x00;
+; 0000 020F     OCR3CL=0x00;
 ;PCODE: $000006DC VOL: 0
 ;PCODE: $000006DD VOL: 0
-; 0000 0210     OCR3CL=0x00;
+; 0000 0210 
+; 0000 0211 // Timer(s)/Counter(s) Interrupt(s) initialization
+; 0000 0212     TIMSK=(0<<OCIE2) | (1<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (0<<OCIE0) | (1<<TOIE0);
 ;PCODE: $000006DE VOL: 0
 ;PCODE: $000006DF VOL: 0
-; 0000 0211 
-; 0000 0212 // Timer(s)/Counter(s) Interrupt(s) initialization
-; 0000 0213     TIMSK=(0<<OCIE2) | (1<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (0<<OCIE0) | (1<<TOIE0);
+; 0000 0213     ETIMSK=(0<<TICIE3) | (0<<OCIE3A) | (0<<OCIE3B) | (0<<TOIE3) | (0<<OCIE3C) | (0<<OCIE1C);
 ;PCODE: $000006E0 VOL: 0
 ;PCODE: $000006E1 VOL: 0
-; 0000 0214     ETIMSK=(0<<TICIE3) | (0<<OCIE3A) | (0<<OCIE3B) | (0<<TOIE3) | (0<<OCIE3C) | (0<<OCIE1C);
+; 0000 0214 
+; 0000 0215 
+; 0000 0216 // External Interrupt(s) initialization
+; 0000 0217 // INT0: Off
+; 0000 0218 // INT1: Off
+; 0000 0219 // INT2: Off
+; 0000 021A // INT3: Off
+; 0000 021B // INT4: Off
+; 0000 021C // INT5: Off
+; 0000 021D // INT6: Off
+; 0000 021E // INT7: Off
+; 0000 021F     EICRA=(0<<ISC31) | (0<<ISC30) | (0<<ISC21) | (0<<ISC20) | (0<<ISC11) | (0<<ISC10) | (0<<ISC01) | (0<<ISC00);
 ;PCODE: $000006E2 VOL: 0
 ;PCODE: $000006E3 VOL: 0
-; 0000 0215 
-; 0000 0216 
-; 0000 0217 // External Interrupt(s) initialization
-; 0000 0218 // INT0: Off
-; 0000 0219 // INT1: Off
-; 0000 021A // INT2: Off
-; 0000 021B // INT3: Off
-; 0000 021C // INT4: Off
-; 0000 021D // INT5: Off
-; 0000 021E // INT6: Off
-; 0000 021F // INT7: Off
-; 0000 0220     EICRA=(0<<ISC31) | (0<<ISC30) | (0<<ISC21) | (0<<ISC20) | (0<<ISC11) | (0<<ISC10) | (0<<ISC01) | (0<<ISC00);
+; 0000 0220     EICRB=(0<<ISC71) | (0<<ISC70) | (0<<ISC61) | (0<<ISC60) | (0<<ISC51) | (0<<ISC50) | (0<<ISC41) | (0<<ISC40);
 ;PCODE: $000006E4 VOL: 0
 ;PCODE: $000006E5 VOL: 0
-; 0000 0221     EICRB=(0<<ISC71) | (0<<ISC70) | (0<<ISC61) | (0<<ISC60) | (0<<ISC51) | (0<<ISC50) | (0<<ISC41) | (0<<ISC40);
+; 0000 0221     EIMSK=(0<<INT7) | (0<<INT6) | (0<<INT5) | (0<<INT4) | (0<<INT3) | (0<<INT2) | (0<<INT1) | (0<<INT0);
 ;PCODE: $000006E6 VOL: 0
 ;PCODE: $000006E7 VOL: 0
-; 0000 0222     EIMSK=(0<<INT7) | (0<<INT6) | (0<<INT5) | (0<<INT4) | (0<<INT3) | (0<<INT2) | (0<<INT1) | (0<<INT0);
+; 0000 0222 
+; 0000 0223 // USART0 initialization
+; 0000 0224 // Communication Parameters: 8 Data, 1 Stop, No Parity
+; 0000 0225 // USART0 Receiver: On
+; 0000 0226 // USART0 Transmitter: On
+; 0000 0227 // USART0 Mode: Asynchronous
+; 0000 0228 // USART0 Baud Rate: 9600
+; 0000 0229     UCSR0A=(0<<RXC0) | (0<<TXC0) | (0<<UDRE0) | (0<<FE0) | (0<<DOR0) | (0<<UPE0) | (0<<U2X0) | (0<<MPCM0);
 ;PCODE: $000006E8 VOL: 0
 ;PCODE: $000006E9 VOL: 0
-; 0000 0223 
-; 0000 0224 // USART0 initialization
-; 0000 0225 // Communication Parameters: 8 Data, 1 Stop, No Parity
-; 0000 0226 // USART0 Receiver: On
-; 0000 0227 // USART0 Transmitter: On
-; 0000 0228 // USART0 Mode: Asynchronous
-; 0000 0229 // USART0 Baud Rate: 9600
-; 0000 022A     UCSR0A=(0<<RXC0) | (0<<TXC0) | (0<<UDRE0) | (0<<FE0) | (0<<DOR0) | (0<<UPE0) | (0<<U2X0) | (0<<MPCM0);
+; 0000 022A     UCSR0B=(1<<RXCIE0) | (1<<TXCIE0) | (0<<UDRIE0) | (1<<RXEN0) | (1<<TXEN0) | (0<<UCSZ02) | (0<<RXB80) | (0<<TXB80);
 ;PCODE: $000006EA VOL: 0
 ;PCODE: $000006EB VOL: 0
-; 0000 022B     UCSR0B=(1<<RXCIE0) | (1<<TXCIE0) | (0<<UDRIE0) | (1<<RXEN0) | (1<<TXEN0) | (0<<UCSZ02) | (0<<RXB80) | (0<<TXB80);
+; 0000 022B     UCSR0C=(0<<UMSEL0) | (0<<UPM01) | (0<<UPM00) | (0<<USBS0) | (1<<UCSZ01) | (1<<UCSZ00) | (0<<UCPOL0);
 ;PCODE: $000006EC VOL: 0
 ;PCODE: $000006ED VOL: 0
-; 0000 022C     UCSR0C=(0<<UMSEL0) | (0<<UPM01) | (0<<UPM00) | (0<<USBS0) | (1<<UCSZ01) | (1<<UCSZ00) | (0<<UCPOL0);
+; 0000 022C     UBRR0H=0x00;
 ;PCODE: $000006EE VOL: 0
 ;PCODE: $000006EF VOL: 0
-; 0000 022D     UBRR0H=0x00;
+; 0000 022D     UBRR0L=0x33;
 ;PCODE: $000006F0 VOL: 0
 ;PCODE: $000006F1 VOL: 0
-; 0000 022E     UBRR0L=0x33;
+; 0000 022E 
+; 0000 022F // USART1 initialization
+; 0000 0230 // USART1 disabled
+; 0000 0231     UCSR1B=(0<<RXCIE1) | (0<<TXCIE1) | (0<<UDRIE1) | (0<<RXEN1) | (0<<TXEN1) | (0<<UCSZ12) | (0<<RXB81) | (0<<TXB81);
 ;PCODE: $000006F2 VOL: 0
 ;PCODE: $000006F3 VOL: 0
-; 0000 022F 
-; 0000 0230 // USART1 initialization
-; 0000 0231 // USART1 disabled
-; 0000 0232     UCSR1B=(0<<RXCIE1) | (0<<TXCIE1) | (0<<UDRIE1) | (0<<RXEN1) | (0<<TXEN1) | (0<<UCSZ12) | (0<<RXB81) | (0<<TXB81);
+; 0000 0232 
+; 0000 0233 // Analog Comparator initialization
+; 0000 0234 // Analog Comparator: Off
+; 0000 0235 // The Analog Comparator's positive input is
+; 0000 0236 // connected to the AIN0 pin
+; 0000 0237 // The Analog Comparator's negative input is
+; 0000 0238 // connected to the AIN1 pin
+; 0000 0239     ACSR=(1<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (0<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
 ;PCODE: $000006F4 VOL: 0
 ;PCODE: $000006F5 VOL: 0
-; 0000 0233 
-; 0000 0234 // Analog Comparator initialization
-; 0000 0235 // Analog Comparator: Off
-; 0000 0236 // The Analog Comparator's positive input is
-; 0000 0237 // connected to the AIN0 pin
-; 0000 0238 // The Analog Comparator's negative input is
-; 0000 0239 // connected to the AIN1 pin
-; 0000 023A     ACSR=(1<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (0<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
+; 0000 023A     SFIOR=(0<<ACME);
 ;PCODE: $000006F6 VOL: 0
 ;PCODE: $000006F7 VOL: 0
-; 0000 023B     SFIOR=(0<<ACME);
+; 0000 023B 
+; 0000 023C // ADC initialization
+; 0000 023D // ADC disabled
+; 0000 023E     ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
 ;PCODE: $000006F8 VOL: 0
 ;PCODE: $000006F9 VOL: 0
-; 0000 023C 
-; 0000 023D // ADC initialization
-; 0000 023E // ADC disabled
-; 0000 023F     ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+; 0000 023F 
+; 0000 0240 // SPI initialization
+; 0000 0241 // SPI disabled
+; 0000 0242     SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
 ;PCODE: $000006FA VOL: 0
 ;PCODE: $000006FB VOL: 0
-; 0000 0240 
-; 0000 0241 // SPI initialization
-; 0000 0242 // SPI disabled
-; 0000 0243     SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
+; 0000 0243 
+; 0000 0244 // TWI initialization
+; 0000 0245 // TWI disabled
+; 0000 0246     TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
 ;PCODE: $000006FC VOL: 0
 ;PCODE: $000006FD VOL: 0
-; 0000 0244 
-; 0000 0245 // TWI initialization
-; 0000 0246 // TWI disabled
-; 0000 0247     TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
+; 0000 0247 
+; 0000 0248 // Graphic Display Controller initialization
+; 0000 0249 // The PCD8544 connections are specified in the
+; 0000 024A // Project|Configure|C Compiler|Libraries|Graphic Display menu:
+; 0000 024B // SDIN - PORTC Bit 7
+; 0000 024C // SCLK - PORTA Bit 7
+; 0000 024D // D /C - PORTC Bit 6
+; 0000 024E // /SCE - PORTC Bit 5
+; 0000 024F // /RES - PORTC Bit 4
+; 0000 0250 
+; 0000 0251 // Specify the current font for displaying text
+; 0000 0252     glcd_init_data.font=font5x7;
 ;PCODE: $000006FE VOL: 0
 ;PCODE: $000006FF VOL: 0
-; 0000 0248 
-; 0000 0249 // Graphic Display Controller initialization
-; 0000 024A // The PCD8544 connections are specified in the
-; 0000 024B // Project|Configure|C Compiler|Libraries|Graphic Display menu:
-; 0000 024C // SDIN - PORTC Bit 7
-; 0000 024D // SCLK - PORTA Bit 7
-; 0000 024E // D /C - PORTC Bit 6
-; 0000 024F // /SCE - PORTC Bit 5
-; 0000 0250 // /RES - PORTC Bit 4
-; 0000 0251 
-; 0000 0252 // Specify the current font for displaying text
-; 0000 0253     glcd_init_data.font=font5x7;
+; 0000 0253 // No function is used for reading
+; 0000 0254 // image data from external memory
+; 0000 0255     glcd_init_data.readxmem=NULL;
 ;PCODE: $00000700 VOL: 0
 ;PCODE: $00000701 VOL: 0
-; 0000 0254 // No function is used for reading
-; 0000 0255 // image data from external memory
-; 0000 0256     glcd_init_data.readxmem=NULL;
+; 0000 0256 // No function is used for writing
+; 0000 0257 // image data to external memory
+; 0000 0258     glcd_init_data.writexmem=NULL;
 ;PCODE: $00000702 VOL: 0
 ;PCODE: $00000703 VOL: 0
-; 0000 0257 // No function is used for writing
-; 0000 0258 // image data to external memory
-; 0000 0259     glcd_init_data.writexmem=NULL;
+; 0000 0259 // Set the LCD temperature coefficient
+; 0000 025A     glcd_init_data.temp_coef=90;
 ;PCODE: $00000704 VOL: 0
 ;PCODE: $00000705 VOL: 0
-; 0000 025A // Set the LCD temperature coefficient
-; 0000 025B     glcd_init_data.temp_coef=90;
 ;PCODE: $00000706 VOL: 0
 ;PCODE: $00000707 VOL: 0
+; 0000 025B // Set the LCD bias
+; 0000 025C     glcd_init_data.bias=3;
 ;PCODE: $00000708 VOL: 0
 ;PCODE: $00000709 VOL: 0
-; 0000 025C // Set the LCD bias
-; 0000 025D     glcd_init_data.bias=3;
 ;PCODE: $0000070A VOL: 0
 ;PCODE: $0000070B VOL: 0
+; 0000 025D // Set the LCD contrast control voltage VLCD
+; 0000 025E     glcd_init_data.vlcd=57;
 ;PCODE: $0000070C VOL: 0
 ;PCODE: $0000070D VOL: 0
-; 0000 025E // Set the LCD contrast control voltage VLCD
-; 0000 025F     glcd_init_data.vlcd=57;
 ;PCODE: $0000070E VOL: 0
 ;PCODE: $0000070F VOL: 0
+; 0000 025F 
+; 0000 0260     glcd_init(&glcd_init_data);
 ;PCODE: $00000710 VOL: 0
 ;PCODE: $00000711 VOL: 0
-; 0000 0260 
-; 0000 0261     glcd_init(&glcd_init_data);
+; 0000 0261 
+; 0000 0262 // Global enable interrupts
+; 0000 0263 #asm("sei")
 ;PCODE: $00000712 VOL: 0
-;PCODE: $00000713 VOL: 0
-; 0000 0262 
-; 0000 0263 // Global enable interrupts
-; 0000 0264 #asm("sei")
-;PCODE: $00000714 VOL: 0
 	sei
+;PCODE: $00000713 VOL: 0
+; 0000 0264 
+; 0000 0265     put_string("AT\r\n");
+;PCODE: $00000714 VOL: 0
 ;PCODE: $00000715 VOL: 0
-; 0000 0265 
-; 0000 0266     put_string("AT\r\n");
 ;PCODE: $00000716 VOL: 0
+; 0000 0266     wait_until("OK", 2);
 ;PCODE: $00000717 VOL: 0
 ;PCODE: $00000718 VOL: 0
-; 0000 0267     wait_until("OK", 2);
 ;PCODE: $00000719 VOL: 0
 ;PCODE: $0000071A VOL: 0
 ;PCODE: $0000071B VOL: 0
 ;PCODE: $0000071C VOL: 0
+; 0000 0267     refresh(0);
 ;PCODE: $0000071D VOL: 0
 ;PCODE: $0000071E VOL: 0
-; 0000 0268     refresh(0);
 ;PCODE: $0000071F VOL: 0
+; 0000 0268 
+; 0000 0269     put_string("AT+CWMODE=1\r\n");
 ;PCODE: $00000720 VOL: 0
 ;PCODE: $00000721 VOL: 0
-; 0000 0269 
-; 0000 026A     put_string("AT+CWMODE=1\r\n");
 ;PCODE: $00000722 VOL: 0
+; 0000 026A     wait_until("OK", 2);
 ;PCODE: $00000723 VOL: 0
 ;PCODE: $00000724 VOL: 0
-; 0000 026B     wait_until("OK", 2);
 ;PCODE: $00000725 VOL: 0
 ;PCODE: $00000726 VOL: 0
 ;PCODE: $00000727 VOL: 0
 ;PCODE: $00000728 VOL: 0
+; 0000 026B     refresh(0);
 ;PCODE: $00000729 VOL: 0
 ;PCODE: $0000072A VOL: 0
-; 0000 026C     refresh(0);
 ;PCODE: $0000072B VOL: 0
+; 0000 026C 
+; 0000 026D     put_string("AT+CWJAP=\"Thay_Thao_deo_giai\",\"chinhxac\"\r\n");
 ;PCODE: $0000072C VOL: 0
 ;PCODE: $0000072D VOL: 0
-; 0000 026D 
-; 0000 026E     put_string("AT+CWJAP=\"Thay_Thao_deo_giai\",\"chinhxac\"\r\n");
 ;PCODE: $0000072E VOL: 0
+; 0000 026E     wait_until("OK", 10);
 ;PCODE: $0000072F VOL: 0
 ;PCODE: $00000730 VOL: 0
-; 0000 026F     wait_until("OK", 10);
 ;PCODE: $00000731 VOL: 0
 ;PCODE: $00000732 VOL: 0
 ;PCODE: $00000733 VOL: 0
 ;PCODE: $00000734 VOL: 0
+; 0000 026F     refresh(0);
 ;PCODE: $00000735 VOL: 0
 ;PCODE: $00000736 VOL: 0
-; 0000 0270     refresh(0);
 ;PCODE: $00000737 VOL: 0
+; 0000 0270 
+; 0000 0271 
+; 0000 0272 //while(!read_and_send("6ZF1YB8AXISBSA2P"));
+; 0000 0273 delay_ms(3000);
 ;PCODE: $00000738 VOL: 0
 ;PCODE: $00000739 VOL: 0
-; 0000 0271 
-; 0000 0272 
-; 0000 0273 //while(!read_and_send("6ZF1YB8AXISBSA2P"));
-; 0000 0274 delay_ms(3000);
+; 0000 0274 RF_Init_RX();
 ;PCODE: $0000073A VOL: 0
+; 0000 0275 config();
 ;PCODE: $0000073B VOL: 0
-; 0000 0275 RF_Init_RX();
+; 0000 0276 RF_Config_RX();
 ;PCODE: $0000073C VOL: 0
-; 0000 0276 config();
+; 0000 0277 count = 1;
 ;PCODE: $0000073D VOL: 0
-; 0000 0277 RF_Config_RX();
 ;PCODE: $0000073E VOL: 0
-; 0000 0278 count = 1;
+; 0000 0278 
+; 0000 0279 glcd_moveto(10,10);
 ;PCODE: $0000073F VOL: 0
 ;PCODE: $00000740 VOL: 0
-; 0000 0279 
-; 0000 027A glcd_moveto(10,10);
 ;PCODE: $00000741 VOL: 0
 ;PCODE: $00000742 VOL: 0
+; 0000 027A glcd_clear();
 ;PCODE: $00000743 VOL: 0
+; 0000 027B glcd_outtext("start");
 ;PCODE: $00000744 VOL: 0
-; 0000 027B glcd_clear();
 ;PCODE: $00000745 VOL: 0
-; 0000 027C glcd_outtext("start");
 ;PCODE: $00000746 VOL: 0
+; 0000 027C 
+; 0000 027D while (1) {
 ;PCODE: $00000747 VOL: 0
+; 0000 027E      /*if((PINC.3==0)&&(lan_bam==0))
+; 0000 027F      {delay_ms(250); check_do_rac(1);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=1;}
+; 0000 0280      if((PINC.3==0)&&(lan_bam==1))
+; 0000 0281      {delay_ms(250); check_do_rac(2);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=2;}
+; 0000 0282      if((PINC.3==0)&&(lan_bam==2))
+; 0000 0283      {delay_ms(250); check_do_rac(3);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=3;}
+; 0000 0284      if((PINC.3==0)&&(lan_bam==3))
+; 0000 0285      {delay_ms(250); check_do_rac(4);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=0;}*/
+; 0000 0286      RF_Mode_RX();
 ;PCODE: $00000748 VOL: 0
-; 0000 027D 
-; 0000 027E while (1) {
+; 0000 0287 
+; 0000 0288     if(IRQ == 0){
 ;PCODE: $00000749 VOL: 0
-; 0000 027F      /*if((PINC.3==0)&&(lan_bam==0))
-; 0000 0280      {delay_ms(250); check_do_rac(1);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=1;}
-; 0000 0281      if((PINC.3==0)&&(lan_bam==1))
-; 0000 0282      {delay_ms(250); check_do_rac(2);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=2;}
-; 0000 0283      if((PINC.3==0)&&(lan_bam==2))
-; 0000 0284      {delay_ms(250); check_do_rac(3);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=3;}
-; 0000 0285      if((PINC.3==0)&&(lan_bam==3))
-; 0000 0286      {delay_ms(250); check_do_rac(4);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=0;}*/
-; 0000 0287      RF_Mode_RX();
 ;PCODE: $0000074A VOL: 0
-; 0000 0288 
-; 0000 0289     if(IRQ == 0){
 ;PCODE: $0000074B VOL: 0
+; 0000 0289         RF_Read_RX_3();
 ;PCODE: $0000074C VOL: 0
+; 0000 028A         if(station_receive.flag == count){
 ;PCODE: $0000074D VOL: 0
-; 0000 028A         RF_Read_RX_3();
 ;PCODE: $0000074E VOL: 0
-; 0000 028B         if(station_receive.flag == count){
 ;PCODE: $0000074F VOL: 0
+; 0000 028B             print_border();
 ;PCODE: $00000750 VOL: 0
+; 0000 028C             glcd_moveto(40, 3);
 ;PCODE: $00000751 VOL: 0
-; 0000 028C             print_border();
 ;PCODE: $00000752 VOL: 0
-; 0000 028D             glcd_moveto(40, 3);
 ;PCODE: $00000753 VOL: 0
 ;PCODE: $00000754 VOL: 0
+; 0000 028D             itoa(station_receive.flag, buff);
 ;PCODE: $00000755 VOL: 0
 ;PCODE: $00000756 VOL: 0
-; 0000 028E             itoa(station_receive.flag, buff);
 ;PCODE: $00000757 VOL: 0
 ;PCODE: $00000758 VOL: 0
+; 0000 028E             glcd_outtext(buff);
 ;PCODE: $00000759 VOL: 0
 ;PCODE: $0000075A VOL: 0
-; 0000 028F             glcd_outtext(buff);
+; 0000 028F             glcd_moveto(46, 18);
 ;PCODE: $0000075B VOL: 0
 ;PCODE: $0000075C VOL: 0
-; 0000 0290             glcd_moveto(46, 18);
 ;PCODE: $0000075D VOL: 0
 ;PCODE: $0000075E VOL: 0
+; 0000 0290             sprintf(buff, "%d ", station_receive.temp);
 ;PCODE: $0000075F VOL: 0
 ;PCODE: $00000760 VOL: 0
-; 0000 0291             sprintf(buff, "%d ", station_receive.temp);
 ;PCODE: $00000761 VOL: 0
 ;PCODE: $00000762 VOL: 0
 ;PCODE: $00000763 VOL: 0
@@ -2657,17 +2656,17 @@ _0xD6:
 ;PCODE: $00000769 VOL: 0
 ;PCODE: $0000076A VOL: 0
 ;PCODE: $0000076B VOL: 0
+; 0000 0291             glcd_outtext(buff);
 ;PCODE: $0000076C VOL: 0
 ;PCODE: $0000076D VOL: 0
-; 0000 0292             glcd_outtext(buff);
+; 0000 0292             glcd_moveto(46, 28);
 ;PCODE: $0000076E VOL: 0
 ;PCODE: $0000076F VOL: 0
-; 0000 0293             glcd_moveto(46, 28);
 ;PCODE: $00000770 VOL: 0
 ;PCODE: $00000771 VOL: 0
+; 0000 0293             sprintf(buff, "%d ", station_receive.humi);
 ;PCODE: $00000772 VOL: 0
 ;PCODE: $00000773 VOL: 0
-; 0000 0294             sprintf(buff, "%d ", station_receive.humi);
 ;PCODE: $00000774 VOL: 0
 ;PCODE: $00000775 VOL: 0
 ;PCODE: $00000776 VOL: 0
@@ -2679,17 +2678,17 @@ _0xD6:
 ;PCODE: $0000077C VOL: 0
 ;PCODE: $0000077D VOL: 0
 ;PCODE: $0000077E VOL: 0
+; 0000 0294             glcd_outtext(buff);
 ;PCODE: $0000077F VOL: 0
 ;PCODE: $00000780 VOL: 0
-; 0000 0295             glcd_outtext(buff);
+; 0000 0295             glcd_moveto(46, 37);
 ;PCODE: $00000781 VOL: 0
 ;PCODE: $00000782 VOL: 0
-; 0000 0296             glcd_moveto(46, 37);
 ;PCODE: $00000783 VOL: 0
 ;PCODE: $00000784 VOL: 0
+; 0000 0296             sprintf(buff, "%d  ", station_receive.water);
 ;PCODE: $00000785 VOL: 0
 ;PCODE: $00000786 VOL: 0
-; 0000 0297             sprintf(buff, "%d  ", station_receive.water);
 ;PCODE: $00000787 VOL: 0
 ;PCODE: $00000788 VOL: 0
 ;PCODE: $00000789 VOL: 0
@@ -2701,13 +2700,14 @@ _0xD6:
 ;PCODE: $0000078F VOL: 0
 ;PCODE: $00000790 VOL: 0
 ;PCODE: $00000791 VOL: 0
+; 0000 0297             glcd_outtext(buff);
 ;PCODE: $00000792 VOL: 0
 ;PCODE: $00000793 VOL: 0
-; 0000 0298             glcd_outtext(buff);
+; 0000 0298             delay_ms(100);
 ;PCODE: $00000794 VOL: 0
 ;PCODE: $00000795 VOL: 0
-; 0000 0299             while(!read_and_send(key[count-1]));
 ;PCODE: $00000796 VOL: 0
+; 0000 0299             while(!read_and_send(key[count]));
 ;PCODE: $00000797 VOL: 0
 ;PCODE: $00000798 VOL: 0
 ;PCODE: $00000799 VOL: 0
@@ -2720,7 +2720,7 @@ _0xD6:
 ;PCODE: $000007A0 VOL: 0
 ;PCODE: $000007A1 VOL: 0
 ;PCODE: $000007A2 VOL: 0
-; 0000 029A             delay_ms(100);
+; 0000 029A             delay_ms(200);
 ;PCODE: $000007A3 VOL: 0
 ;PCODE: $000007A4 VOL: 0
 ;PCODE: $000007A5 VOL: 0

@@ -14,7 +14,7 @@ unsigned char P_Add, Code_tay_cam1 = 0xA1, Code_tay_cam2 = 0xA2, Code_tay_cam3 =
 unsigned char p=0,lan_bam=0;
 int count;
 bool flag;
-unsigned char* key[] = {"4Z7AG6FSEB4HX4UX", "MZS0VOJNPWMKIE67", "PS023R7T7MVUBSEW", "C61VL0Z6IDK6W9RG"};
+unsigned char* key[] = {"", "4Z7AG6FSEB4HX4UX", "MZS0VOJNPWMKIE67", "PS023R7T7MVUBSEW", "C61VL0Z6IDK6W9RG"};
 
 unsigned int dem=0;
 #define CE PORTA.3
@@ -310,7 +310,7 @@ bool read_and_send(unsigned char *s){
     itoa(length, temp); 
     glcd_moveto(0, 40);
     glcd_outtext(temp);
-    delay_ms(3000);
+    delay_ms(1000);
     
 
     
@@ -320,22 +320,21 @@ bool read_and_send(unsigned char *s){
     delay_ms(1000);
     put_string("\r\n");
     
-    if(!wait_until("> ", 10))
+    if(!wait_until("> ", 5))
         return false;
+    
+    put_string(cmd);
+    put_string("\r\n");
+    delay_ms(1000);
+    putchar(0x1A);   
     
     glcd_clear();
     glcd_moveto(0,0);
     glcd_outtext("Sending");
     
-    put_string(cmd);
-    put_string("\r\n");
-    delay_ms(1000);
-    putchar(0x1A);
-    
     refresh(0);
     if(!wait_until("IDP", 5))
         return false; 
-    del_string(cmd);
     return true;
     
 }
@@ -661,9 +660,10 @@ while (1) {
             glcd_outtext(buff);
             glcd_moveto(46, 37);
             sprintf(buff, "%d  ", station_receive.water);
-            glcd_outtext(buff);
-            while(!read_and_send(key[count-1])); 
-            delay_ms(100); 
+            glcd_outtext(buff);             
+            delay_ms(100);
+            while(!read_and_send(key[count])); 
+            delay_ms(200); 
             glcd_clear();                          
             count++;
             if(count == 5)
