@@ -1,0 +1,2 @@
+Trạm 4 và 3 có địa chỉ dạng: Code_tram_2 + Code_tram_2 + Code_tram_2 + Code_tram_2 + Code_tram_3 || Code_tram_4
+Đọc địa chỉ có dạng: Code_tram_3 || Code_tram_4 + Code_tram_2 + Code_tram_2 + Code_tram_2 + Code_tram_2
