@@ -1998,14 +1998,14 @@ _main:
 	STD  Y+4,R30
 	STD  Y+4+1,R30
 ; 0000 00CD // Set the LCD temperature coefficient
-; 0000 00CE glcd_init_data.temp_coef=PCD8544_DEFAULT_TEMP_COEF;
+; 0000 00CE glcd_init_data.temp_coef=139;
 	LDD  R30,Y+6
-	ANDI R30,LOW(0xFC)
+	ORI  R30,LOW(0x3)
 	STD  Y+6,R30
 ; 0000 00CF // Set the LCD bias
-; 0000 00D0 glcd_init_data.bias=2;
+; 0000 00D0 glcd_init_data.bias=4;
 	ANDI R30,LOW(0xE3)
-	ORI  R30,8
+	ORI  R30,0x10
 	STD  Y+6,R30
 ; 0000 00D1 // Set the LCD contrast control voltage VLCD
 ; 0000 00D2 glcd_init_data.vlcd=PCD8544_DEFAULT_VLCD;

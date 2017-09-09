@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  C:\Users\s0lut1on\Desktop\tuoi nuoc\tram con\Debug\List\1.asm Tue Sep 05 16:15:25 2017
+AVRASM ver. 2.1.30  C:\Users\s0lut1on\Desktop\tuoi nuoc\tram con\Debug\List\1.asm Sat Sep 09 17:15:12 2017
 
 C:\Users\s0lut1on\Desktop\tuoi nuoc\tram con\Debug\List\1.asm(1086): warning: Register r5 already defined by the .DEF directive
 C:\Users\s0lut1on\Desktop\tuoi nuoc\tram con\Debug\List\1.asm(1087): warning: Register r4 already defined by the .DEF directive
@@ -2275,14 +2275,14 @@ C:\Users\s0lut1on\Desktop\tuoi nuoc\tram con\Debug\List\1.asm(1210): warning: .c
 000307 83ec      	STD  Y+4,R30
 000308 83ed      	STD  Y+4+1,R30
                  ; 0000 00CD // Set the LCD temperature coefficient
-                 ; 0000 00CE glcd_init_data.temp_coef=PCD8544_DEFAULT_TEMP_COEF;
+                 ; 0000 00CE glcd_init_data.temp_coef=139;
 000309 81ee      	LDD  R30,Y+6
-00030a 7fec      	ANDI R30,LOW(0xFC)
+00030a 60e3      	ORI  R30,LOW(0x3)
 00030b 83ee      	STD  Y+6,R30
                  ; 0000 00CF // Set the LCD bias
-                 ; 0000 00D0 glcd_init_data.bias=2;
+                 ; 0000 00D0 glcd_init_data.bias=4;
 00030c 7ee3      	ANDI R30,LOW(0xE3)
-00030d 60e8      	ORI  R30,8
+00030d 61e0      	ORI  R30,0x10
 00030e 83ee      	STD  Y+6,R30
                  ; 0000 00D1 // Set the LCD contrast control voltage VLCD
                  ; 0000 00D2 glcd_init_data.vlcd=PCD8544_DEFAULT_VLCD;
@@ -5809,7 +5809,7 @@ Registers used: 26 out of 35 (74.3%)
 
 ATmega8 instruction use summary:
 .lds  :   0 .lds.l:   0 .sts  :   0 .sts.l:   0 adc   :  24 add   :  31 
-adiw  :  40 and   :  11 andi  :  17 asr   :   0 bclr  :   0 bld   :   2 
+adiw  :  40 and   :  11 andi  :  16 asr   :   0 bclr  :   0 bld   :   2 
 brbc  :   0 brbs  :   0 brcc  :   2 brcs  :   0 break :   0 breq  :  51 
 brge  :   2 brhc  :   0 brhs  :   0 brid  :   0 brie  :   0 brlo  :  17 
 brlt  :   7 brmi  :   5 brne  :  96 brpl  :   7 brsh  :  26 brtc  :   2 
@@ -5820,7 +5820,7 @@ cpc   :  11 cpi   : 111 cpse  :   0 dec   :  13 des   :   0 eor   :   5
 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   4 ijmp  :   0 in    :   7 
 inc   :   6 ld    :  48 ldd   : 298 ldi   : 314 lds   :  40 lpm   :  30 
 lsl   :  16 lsr   :  10 mov   : 126 movw  :  43 mul   :  14 muls  :   0 
-mulsu :   0 neg   :   4 nop   :   0 or    :   7 ori   :  14 out   :  47 
+mulsu :   0 neg   :   4 nop   :   0 or    :   7 ori   :  15 out   :  47 
 pop   :  23 push  :  22 rcall : 472 ret   : 101 reti  :   1 rjmp  : 246 
 rol   :  16 ror   :   7 sbc   :   6 sbci  :  13 sbi   :  28 sbic  :   6 
 sbis  :   7 sbiw  :  41 sbr   :   1 sbrc  :   2 sbrs  :  13 sec   :   1 

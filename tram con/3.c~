@@ -228,7 +228,7 @@ glcd_line(0, 0, 0, 48);
 glcd_moveto(3,3);
 glcd_outtext("Node: ");
 glcd_moveto(40, 3);
-glcd_outtext("4");
+glcd_outtext("3");
 			
 glcd_moveto(4, 18);
 glcd_outtext("Temp: ");
