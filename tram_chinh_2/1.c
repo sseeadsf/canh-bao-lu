@@ -15,6 +15,7 @@ unsigned char p=0,lan_bam=0;
 int count;
 bool flag;
 unsigned char* key[] = {"", "4Z7AG6FSEB4HX4UX", "MZS0VOJNPWMKIE67", "PS023R7T7MVUBSEW", "C61VL0Z6IDK6W9RG"};
+char cmd[250];
 
 unsigned int dem=0;
 #define CE PORTA.3
@@ -243,8 +244,9 @@ bool wait_until(unsigned char *keyword, int time_out_s) {
 
 bool read_and_send(unsigned char *s){
     // Thay nhung ham respones_read bang ham wait_until
-    char api_key[20], cmd[] = "GET /update?key=", temp[20], temp2[20];
-    int length = 0, i = 0;
+    char api_key[20], temp[20], temp2[20];
+    int length = 0, i = 0; 
+    strcpy(cmd,"GET /update?key=");
     
     while (*s) {
         temp2[i] = *s;
@@ -333,8 +335,8 @@ bool read_and_send(unsigned char *s){
     glcd_outtext("Sending");
     
     refresh(0);
-    if(!wait_until("IDP", 5))
-        return false; 
+    /*if(!wait_until("OK", 5))
+        return false;*/  
     return true;
     
 }
