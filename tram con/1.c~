@@ -203,11 +203,11 @@ glcd_init_data.readxmem=NULL;
 // image data to external memory
 glcd_init_data.writexmem=NULL;
 // Set the LCD temperature coefficient
-glcd_init_data.temp_coef=PCD8544_DEFAULT_TEMP_COEF;
+glcd_init_data.temp_coef=139;
 // Set the LCD bias
 glcd_init_data.bias=4;
 // Set the LCD contrast control voltage VLCD
-glcd_init_data.vlcd=PCD8544_DEFAULT_VLCD;
+glcd_init_data.vlcd=69;
 
 #asm("sei")
 

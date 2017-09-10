@@ -1991,6 +1991,10 @@ _config:
 	ST   -Y,R30
 	LDI  R26,LOW(2)
 	RCALL _RF_Write_TX
+	LDI  R30,LOW(6)
+	ST   -Y,R30
+	LDI  R26,LOW(32)
+	RCALL _RF_Write_TX
 	RET
 ; .FEND
 _SPI_RW_TX:

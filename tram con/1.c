@@ -207,7 +207,7 @@ glcd_init_data.temp_coef=139;
 // Set the LCD bias
 glcd_init_data.bias=4;
 // Set the LCD contrast control voltage VLCD
-glcd_init_data.vlcd=PCD8544_DEFAULT_VLCD;
+glcd_init_data.vlcd=69;
 
 #asm("sei")
 
@@ -261,11 +261,11 @@ while (1){
         glcd_outtext(buff);          
       
         data_send.flag = 1;
-        data_send.temp = dht_nhiet_do;
-        data_send.humi = dht_do_am;
-        data_send.light = (int)read_adc(6)/4;
-        data_send.sm = (int)read_adc(7)/4;
-        data_send.water = (int)distance;  
+        data_send.temp = (long int)dht_nhiet_do;
+        data_send.humi = (long int)dht_do_am;
+        data_send.light = (long int)read_adc(6)/4;
+        data_send.sm = (long int)read_adc(7)/4;
+        data_send.water = (long int)distance;  
       
         RF_Send_TX(data_send);
 

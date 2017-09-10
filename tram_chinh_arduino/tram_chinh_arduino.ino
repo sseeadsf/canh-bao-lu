@@ -27,12 +27,12 @@ byte pipeNum = 0;
 
 typedef struct
 {
-    int flag;
-    int light;
-    int humi;
-    int temp;
-    int sm;  
-    int water;
+    long flag;
+    long light;
+    long humi;
+    long temp;
+    long sm;  
+    long water;
 }station_info;
 
 station_info data_receive;
@@ -40,9 +40,9 @@ station_info data_receive;
 void receives(){
   radio.startListening();
   radio.openReadingPipe(1, 0xA1A1A1A1A1);
-  radio.openReadingPipe(2, 0xA2A2A2A2A2);
-  radio.openReadingPipe(3, 0xA3A2A2A2A2);
-  radio.openReadingPipe(4, 0xA4A2A2A2A2);
+  radio.openReadingPipe(2, 0xA1A1A1A1A1);
+  //radio.openReadingPipe(3, 0xA3A2A2A2A2);
+  //radio.openReadingPipe(4, 0xA4A2A2A2A2);
 }
 
 void setup(void)
@@ -52,9 +52,13 @@ void setup(void)
     //pinMode(A2,OUTPUT);         //////////// DEN LCD
     //pinMode(A3,INPUT_PULLUP);     // tien can, binh thuong = 1, co nguoi =0
     radio.begin();      //nrf setup
-    radio.setRetries(1,1);
-    radio.setDataRate(RF24_250KBPS);
     radio.setPALevel(RF24_PA_MAX);
+    radio.setDataRate(RF24_250KBPS);
+    radio.setAutoAck(1);
+    radio.setChannel(2);
+    radio.setAddressWidth(5);
+    radio.enableDynamicPayloads();
+    receives();
     lcd.begin(16,2);
     delay(500);
     wifi_connect();
@@ -72,6 +76,7 @@ void setup(void)
     TIMSK1 = (1 << TOIE1);                  // Overflow interrupt enable 
     sei();                    // cho phép ngắt toàn cục
     //============================================
+    Serial.println("start system");
 }
 
 void loop(void)
@@ -85,22 +90,20 @@ void receive_data(int Num)
 {
     while(radio.available(&pipeNum))
     {
-      if(pipeNum == Num)
-      {
+      //if(pipeNum == Num){
           radio.read(&data_receive, sizeof(data_receive));
           Serial.print(pipeNum);
           Serial.print(":");
-          //Serial.println(data_receive.flag);
-          Serial.println(data_receive.light);
-          Serial.println(data_receive.humi);
-          Serial.println(data_receive.temp);
-          Serial.println(data_receive.sm);
+          Serial.print(data_receive.light); Serial.print("  ");
+          Serial.print(data_receive.humi); Serial.print("  ");
+          Serial.print(data_receive.temp); Serial.print("  ");
+          Serial.print(data_receive.sm); Serial.print("  ");
           Serial.println(data_receive.water);
           count++;
           //send_data_to_web();
           delay(200);
           //get_setting();
-      }
+      //}
     }
 }
 
