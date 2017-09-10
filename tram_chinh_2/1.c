@@ -11,7 +11,7 @@
 #include <font5x7.h>
 unsigned char P_Add;
 unsigned char P_Add, Code_tay_cam1 = 0xA1, Code_tay_cam2 = 0xA2, Code_tay_cam3 = 0xA3, Code_tay_cam4 = 0xA4; 
-unsigned char p=0,lan_bam=0;
+//unsigned char p=0,lan_bam=0;
 int count;
 bool flag;
 unsigned char* key[] = {"", "4Z7AG6FSEB4HX4UX", "MZS0VOJNPWMKIE67", "PS023R7T7MVUBSEW", "C61VL0Z6IDK6W9RG"};
@@ -326,17 +326,11 @@ bool read_and_send(unsigned char *s){
         return false;
     
     put_string(cmd);
+    delay_ms(200);
     put_string("\r\n");
-    delay_ms(1000);
-    putchar(0x1A);   
-    
-    glcd_clear();
-    glcd_moveto(0,0);
-    glcd_outtext("Sending");
-    
-    refresh(0);
-    /*if(!wait_until("OK", 5))
-        return false;*/  
+    if(!wait_until("Receive", 2))
+        return false;     
+        
     return true;
     
 }
@@ -364,47 +358,6 @@ void print_border(){
     glcd_outtext("mm");
 }
 
-void check_do_rac(int value){
-    if(value == 1)
-        P_Add = 0xA1;
-    else if(value == 2)
-        P_Add = 0xA2;
-    else if(value == 3)
-        P_Add = 0xA3;
-    else
-        P_Add = 0xA4;
-    RF_Config_TX();
-    RF_Mode_TX(); 
-    RF_Send_TX(data_send); 
-    delay_ms(100);
-    RF_Send_TX(data_send);   
-    delay_ms(500);
-    RF_Config_RX_2();
-    RF_Mode_RX(); 
-        if(IRQ == 0){
-           RF_Read_RX_3();       
-           print_border();
-           //if(station_receive.flag == count){
-            glcd_moveto(40, 3);
-            itoa(station_receive.flag, buff);
-            glcd_outtext(buff);                             
-            glcd_moveto(46, 18);
-            sprintf(buff, "%d ", station_receive.temp);
-            glcd_outtext(buff);
-            glcd_moveto(46, 28);
-            sprintf(buff, "%d ", station_receive.humi);
-            glcd_outtext(buff);
-            glcd_moveto(46, 37);
-            sprintf(buff, "%d  ", station_receive.water);
-            glcd_outtext(buff);
-            delay_ms(2000);
-            /*count++;
-            if(count == 5)
-                count = 1;
-        }     */
-		      
-        }
-    } 
 
 void main(void) {
 
@@ -637,18 +590,15 @@ glcd_clear();
 glcd_outtext("start");
  
 while (1) {
-     /*if((PINC.3==0)&&(lan_bam==0))
-     {delay_ms(250); check_do_rac(1);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=1;}
-     if((PINC.3==0)&&(lan_bam==1))
-     {delay_ms(250); check_do_rac(2);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=2;}  
-     if((PINC.3==0)&&(lan_bam==2))
-     {delay_ms(250); check_do_rac(3);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=3;}
-     if((PINC.3==0)&&(lan_bam==3))
-     {delay_ms(250); check_do_rac(4);read_and_send("6ZF1YB8AXISBSA2P");lan_bam=0;}*/
-     RF_Mode_RX();                      
-                
+    RF_Mode_RX();                      
+        
+    if(PINC.3 == 0){
+        delay_ms(500);
+        count++;
+    }        
     if(IRQ == 0){   
-        RF_Read_RX_3();                         
+        RF_Read_RX_3();
+                                 
         if(station_receive.flag == count){
             print_border();
             glcd_moveto(40, 3);
