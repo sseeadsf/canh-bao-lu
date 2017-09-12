@@ -1,4 +1,4 @@
-VERSION:3 SOURCE_TIMESTAMP:4B2A9285
+VERSION:3 SOURCE_TIMESTAMP:4B2C866F
 NODE:I LEVEL:0 LINE:2 "D:\Code_vision_3.1\inc\mega8.h"
 NODE:I LEVEL:0 LINE:3 "D:\Code_vision_3.1\inc\delay.h"
 NODE:M LEVEL:0 LINE:6 "DHT_DATA_IN"
@@ -40,4 +40,5 @@ NODE:V LEVEL:0 LINE:60 "dem -> RAM:????"
 NODE:V LEVEL:0 LINE:61 "distance -> RAM:????"
 NODE:F LEVEL:0 LINE:63 "set_up_sieu_am(void)"
 NODE:F LEVEL:0 LINE:75 "timer2_ovf(void)"
-NODE:F LEVEL:0 LINE:88 "main(void)"
+NODE:F LEVEL:0 LINE:86 "border(void)"
+NODE:F LEVEL:0 LINE:113 "main(void)"

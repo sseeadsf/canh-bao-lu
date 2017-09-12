@@ -7,6 +7,10 @@
 // Font used for displaying text
 // on the graphic display
 #include <font5x7.h>
+#include <i2c.h>
+
+// DS1307 Real Time Clock functions
+#include <ds1307.h>
 
 // Declare your global variables here
 #define menu PINC.3
@@ -36,6 +40,9 @@ unsigned int rx_counter0=0;
 
 char buff[260];
 int i = 0, time_flow = 0, time_s = 0;
+bool flag = false;
+int dem;
+int count;
 
 void del_string(unsigned char *s) {
     while (*s) {
@@ -125,6 +132,17 @@ interrupt [TIM0_OVF] void timer0_ovf_isr(void) {
     if (time_flow == 10000) {
         time_s++;
         time_flow = 0;
+    }
+}
+
+interrupt [TIM2_OVF] void timer2_ovf(void){
+    TCNT2 = 0x83;
+    if(flag == true)
+        dem++;
+    if(dem == 3000){
+        count++;
+        dem = 0;
+        flag = false;
     }
 }
 
@@ -225,7 +243,7 @@ void wait_until(unsigned char *keyword, int time_out_s) {
 
 unsigned char P_Add, Code_tay_cam1 = 0xA1, Code_tay_cam2 = 0xA2, Code_tay_cam3 = 0xA3, Code_tay_cam4 = 0xA4; 
 #include "nrf_code.c"
-int count;
+
 bool flag;
 unsigned char* key[] = {"", "7R6NSYFHBFRUAR6K", "5I000WROXOFS0V85", "6NHFXH076SC02DZ0", "WUIT8LX7N92X8J4W"};
 char cmd[250];
@@ -400,8 +418,8 @@ PORTA=(0<<PORTA7) | (0<<PORTA6) | (1<<PORTA5) | (1<<PORTA4) | (1<<PORTA3) | (1<<
 // Clock value: Timer2 Stopped
 // Mode: Normal top=0xFF
 // OC2 output: Disconnected
-    TCCR2=(0<<WGM20) | (0<<COM21) | (0<<COM20) | (0<<WGM21) | (0<<CS22) | (0<<CS21) | (0<<CS20);
-    TCNT2=0x00;
+    TCCR2=(0<<WGM20) | (0<<COM21) | (0<<COM20) | (0<<WGM21) | (0<<CS22) | (1<<CS21) | (1<<CS20);
+    TCNT2=0x83;   //1ms
     OCR2=0x00;
 
 // Timer/Counter 3 initialization
@@ -432,7 +450,7 @@ PORTA=(0<<PORTA7) | (0<<PORTA6) | (1<<PORTA5) | (1<<PORTA4) | (1<<PORTA3) | (1<<
     OCR3CL=0x00;
 
 // Timer(s)/Counter(s) Interrupt(s) initialization
-    TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (0<<OCIE0) | (1<<TOIE0);
+    TIMSK=(0<<OCIE2) | (1<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (0<<OCIE0) | (1<<TOIE0);
     ETIMSK=(0<<TICIE3) | (0<<OCIE3A) | (0<<OCIE3B) | (0<<TOIE3) | (0<<OCIE3C) | (0<<OCIE1C);
 
 // External Interrupt(s) initialization
@@ -484,6 +502,20 @@ PORTA=(0<<PORTA7) | (0<<PORTA6) | (1<<PORTA5) | (1<<PORTA4) | (1<<PORTA3) | (1<<
 // TWI initialization
 // TWI disabled
     TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
+    
+    // Bit-Banged I2C Bus initialization
+// I2C Port: PORTD
+// I2C SDA bit: 1
+// I2C SCL bit: 0
+// Bit Rate: 100 kHz
+// Note: I2C settings are specified in the
+// Project|Configure|C Compiler|Libraries|I2C menu.
+i2c_init();
+
+// DS1307 Real Time Clock initialization
+// Square wave output on pin SQW/OUT: On
+// Square wave frequency: 32768Hz
+rtc_init(3,1,0);
 
 // Graphic Display Controller initialization
 // The PCD8544 connections are specified in the
@@ -522,62 +554,69 @@ config();
 RF_Config_RX();
 count = 1;
 glcd_clear();
-// menu hien len o day
-while (1)
-    {
-    if (menu==0)
-    {
-        while(1)
-        {    
-        RF_Mode_RX();                      
-        if(IRQ == 0){   
-            RF_Read_RX_3(); 
-            if(station_receive.flag == count){
-                border();
-                glcd_moveto(40, 3);
-                itoa(station_receive.flag, buff);
-                glcd_outtext(buff);                             
-                glcd_moveto(46, 18);
-                sprintf(buff, "%d", station_receive.temp);
-                glcd_outtext(buff);
-                glcd_moveto(46, 28);
-                sprintf(buff, "%d", station_receive.humi);
-                glcd_outtext(buff);
-                glcd_moveto(46, 37);
-                sprintf(buff, "%d", station_receive.sm);
-                glcd_outtext(buff);                
-                read_and_send(key[count]);
-                delay_ms(800);
-                count++;
-                if(count == 5)
-                    count = 1;
+
+while (1){
+    if (menu==0){
+        while(1){    
+            RF_Mode_RX();                      
+            if(IRQ == 0){   
+                RF_Read_RX_3(); 
+                if(station_receive.flag == count){
+                    border();
+                    glcd_moveto(40, 3);
+                    itoa(station_receive.flag, buff);
+                    glcd_outtext(buff);                             
+                    glcd_moveto(46, 18);
+                    sprintf(buff, "%d", station_receive.temp);
+                    glcd_outtext(buff);
+                    glcd_moveto(46, 28);
+                    sprintf(buff, "%d", station_receive.humi);
+                    glcd_outtext(buff);
+                    glcd_moveto(46, 37);
+                    sprintf(buff, "%d", station_receive.sm);
+                    glcd_outtext(buff);                
+                    read_and_send(key[count]);
+                    delay_ms(800);
+                    count++;
+                    if(count == 5)
+                        count = 1; 
+                    dem = 0;
+                    flag = true; 
                 }      
+            }
         }
+    }
+    if (back==0){
+        while(1){
+            RF_Mode_RX();                      
+            if(IRQ == 0){   
+                RF_Read_RX_3(); 
+                if(station_receive.flag == count){
+                    border();
+                    glcd_moveto(40, 3);
+                    itoa(station_receive.flag, buff);
+                    glcd_outtext(buff);                             
+                    glcd_moveto(46, 18);
+                    sprintf(buff, "%d", station_receive.temp);
+                    glcd_outtext(buff);
+                    glcd_moveto(46, 28);
+                    sprintf(buff, "%d", station_receive.humi);
+                    glcd_outtext(buff);
+                    glcd_moveto(46, 37);
+                    sprintf(buff, "%d", station_receive.sm);
+                    glcd_outtext(buff);
+                    delay_ms(800);
+                    count++;
+                    if(count == 5)
+                        count = 1; 
+                    dem = 0;
+                    flag = true; 
+                }   
+            }    
         }
     }
-    if (back==0)
-    {
-    while(1)
-    {
-     RF_Mode_RX();                      
-        if(IRQ == 0){   
-            RF_Read_RX_3(); 
-            border();
-            glcd_moveto(40, 3);
-            itoa(station_receive.flag, buff);
-            glcd_outtext(buff);                             
-            glcd_moveto(46, 18);
-            sprintf(buff, "%d", station_receive.temp);
-            glcd_outtext(buff);
-            glcd_moveto(46, 28);
-            sprintf(buff, "%d", station_receive.humi);
-            glcd_outtext(buff);
-            glcd_moveto(46, 37);
-            sprintf(buff, "%d", station_receive.sm);
-            glcd_outtext(buff);                
-            delay_ms(1000);    
-        }    
-    }
-    }
+    while(enter == 1){
+        
+    }    
 }
 }

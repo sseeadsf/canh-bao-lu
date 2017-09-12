@@ -1166,7 +1166,7 @@
 ;PCODE: $0000040E VOL: 0
 ;PCODE: $0000040F VOL: 0
 ;PCODE: $00000410 VOL: 0
-; 0000 0050     distance = dem*0.1*3.432*5;
+; 0000 0050     distance = dem*0.1*3.432*0.5;
 ;PCODE: $00000411 VOL: 0
 ;PCODE: $00000412 VOL: 0
 ;PCODE: $00000413 VOL: 0
@@ -1189,437 +1189,443 @@
 ;PCODE: $00000420 VOL: 0
 ;PCODE: $00000421 VOL: 0
 ;
-;
-;
-;void main(void)
-; 0000 0059 {
+;void border()
+; 0000 0057 {
 ;PCODE: $00000422 VOL: 0
-; 0000 005A // Declare your local variables here
-; 0000 005B // Variable used to store graphic display
-; 0000 005C // controller initialization data
-; 0000 005D GLCDINIT_t glcd_init_data;
-; 0000 005E 
-; 0000 005F // Input/Output Ports initialization
-; 0000 0060 // Port B initialization
-; 0000 0061 // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-; 0000 0062 DDRB=(0<<DDB7) | (1<<DDB6) | (1<<DDB5) | (0<<DDB4) | (0<<DDB3) | (0<<DDB2) | (0<<DDB1) | (0<<DDB0);
 ;PCODE: $00000423 VOL: 0
-;	glcd_init_data -> Y+0
+; 0000 0058     glcd_line(48,0, 48, 15);
 ;PCODE: $00000424 VOL: 0
 ;PCODE: $00000425 VOL: 0
-; 0000 0063 // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 0064 PORTB=(1<<PORTB7) | (1<<PORTB6) | (1<<PORTB5) | (1<<PORTB4) | (0<<PORTB3) | (0<<PORTB2) | (0<<PORTB1) | (0<<PORTB0);
 ;PCODE: $00000426 VOL: 0
 ;PCODE: $00000427 VOL: 0
-; 0000 0065 
-; 0000 0066 // Port C initialization
-; 0000 0067 // Function: Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-; 0000 0068 DDRC=(0<<DDC6) | (1<<DDC5) | (0<<DDC4) | (0<<DDC3) | (0<<DDC2) | (0<<DDC1) | (0<<DDC0);
 ;PCODE: $00000428 VOL: 0
 ;PCODE: $00000429 VOL: 0
-; 0000 0069 // State: Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 006A PORTC=(0<<PORTC6) | (1<<PORTC5) | (0<<PORTC4) | (0<<PORTC3) | (0<<PORTC2) | (0<<PORTC1) | (0<<PORTC0);
 ;PCODE: $0000042A VOL: 0
 ;PCODE: $0000042B VOL: 0
-; 0000 006B 
-; 0000 006C // Port D initialization
-; 0000 006D // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
-; 0000 006E DDRD=(0<<DDD7) | (0<<DDD6) | (0<<DDD5) | (1<<DDD4) | (1<<DDD3) | (1<<DDD2) | (0<<DDD1) | (0<<DDD0);
+; 0000 0059     glcd_line(0, 15, 48, 15);
 ;PCODE: $0000042C VOL: 0
 ;PCODE: $0000042D VOL: 0
-; 0000 006F // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
-; 0000 0070 PORTD=(0<<PORTD7) | (0<<PORTD6) | (0<<PORTD5) | (1<<PORTD4) | (1<<PORTD3) | (1<<PORTD2) | (1<<PORTD1) | (0<<PORTD0);
 ;PCODE: $0000042E VOL: 0
 ;PCODE: $0000042F VOL: 0
-; 0000 0071 
-; 0000 0072 // Timer/Counter 0 initialization
-; 0000 0073 // Clock source: System Clock
-; 0000 0074 // Clock value: Timer 0 Stopped
-; 0000 0075 TCCR0=(0<<CS02) | (1<<CS01) | (0<<CS00);
 ;PCODE: $00000430 VOL: 0
 ;PCODE: $00000431 VOL: 0
-; 0000 0076 TCNT0=0x9C;
 ;PCODE: $00000432 VOL: 0
 ;PCODE: $00000433 VOL: 0
-; 0000 0077 
-; 0000 0078 // Timer/Counter 1 initialization
-; 0000 0079 // Clock source: System Clock
-; 0000 007A // Clock value: Timer1 Stopped
-; 0000 007B // Mode: Normal top=0xFFFF
-; 0000 007C // OC1A output: Disconnected
-; 0000 007D // OC1B output: Disconnected
-; 0000 007E // Noise Canceler: Off
-; 0000 007F // Input Capture on Falling Edge
-; 0000 0080 // Timer1 Overflow Interrupt: Off
-; 0000 0081 // Input Capture Interrupt: Off
-; 0000 0082 // Compare A Match Interrupt: Off
-; 0000 0083 // Compare B Match Interrupt: Off
-; 0000 0084 TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (0<<WGM10);
+; 0000 005A     glcd_line(0,0,84,0);
 ;PCODE: $00000434 VOL: 0
 ;PCODE: $00000435 VOL: 0
-; 0000 0085 TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (0<<WGM12) | (0<<CS12) | (0<<CS11) | (0<<CS10);
 ;PCODE: $00000436 VOL: 0
 ;PCODE: $00000437 VOL: 0
-; 0000 0086 TCNT1H=0x00;
 ;PCODE: $00000438 VOL: 0
 ;PCODE: $00000439 VOL: 0
-; 0000 0087 TCNT1L=0x00;
 ;PCODE: $0000043A VOL: 0
 ;PCODE: $0000043B VOL: 0
-; 0000 0088 ICR1H=0x00;
+; 0000 005B     glcd_line(84,0, 84, 48);
 ;PCODE: $0000043C VOL: 0
 ;PCODE: $0000043D VOL: 0
-; 0000 0089 ICR1L=0x00;
 ;PCODE: $0000043E VOL: 0
 ;PCODE: $0000043F VOL: 0
-; 0000 008A OCR1AH=0x00;
 ;PCODE: $00000440 VOL: 0
 ;PCODE: $00000441 VOL: 0
-; 0000 008B OCR1AL=0x00;
 ;PCODE: $00000442 VOL: 0
 ;PCODE: $00000443 VOL: 0
-; 0000 008C OCR1BH=0x00;
+; 0000 005C     glcd_line(0, 48, 84, 48);
 ;PCODE: $00000444 VOL: 0
 ;PCODE: $00000445 VOL: 0
-; 0000 008D OCR1BL=0x00;
 ;PCODE: $00000446 VOL: 0
 ;PCODE: $00000447 VOL: 0
-; 0000 008E 
-; 0000 008F // Timer/Counter 2 initialization
-; 0000 0090 // Clock source: System Clock
-; 0000 0091 // Clock value: Timer2 Stopped
-; 0000 0092 // Mode: Normal top=0xFF
-; 0000 0093 // OC2 output: Disconnected
-; 0000 0094 ASSR=0<<AS2;
 ;PCODE: $00000448 VOL: 0
 ;PCODE: $00000449 VOL: 0
-; 0000 0095 TCCR2=(0<<PWM2) | (0<<COM21) | (0<<COM20) | (0<<CTC2) | (0<<CS22) | (0<<CS21) | (0<<CS20);
 ;PCODE: $0000044A VOL: 0
 ;PCODE: $0000044B VOL: 0
-; 0000 0096 TCNT2=0x00;
+; 0000 005D     glcd_line(0, 0, 0, 48);
 ;PCODE: $0000044C VOL: 0
 ;PCODE: $0000044D VOL: 0
-; 0000 0097 OCR2=0x00;
 ;PCODE: $0000044E VOL: 0
 ;PCODE: $0000044F VOL: 0
-; 0000 0098 
-; 0000 0099 // Timer(s)/Counter(s) Interrupt(s) initialization
-; 0000 009A TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
 ;PCODE: $00000450 VOL: 0
 ;PCODE: $00000451 VOL: 0
-; 0000 009B 
-; 0000 009C // External Interrupt(s) initialization
-; 0000 009D // INT0: Off
-; 0000 009E // INT1: Off
-; 0000 009F MCUCR=(0<<ISC11) | (0<<ISC10) | (0<<ISC01) | (0<<ISC00);
 ;PCODE: $00000452 VOL: 0
 ;PCODE: $00000453 VOL: 0
-; 0000 00A0 
-; 0000 00A1 // USART initialization
-; 0000 00A2 // USART disabled
-; 0000 00A3 UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
+; 0000 005E     glcd_moveto(3,3);
 ;PCODE: $00000454 VOL: 0
 ;PCODE: $00000455 VOL: 0
-; 0000 00A4 
-; 0000 00A5 // Analog Comparator initialization
-; 0000 00A6 // Analog Comparator: Off
-; 0000 00A7 // The Analog Comparator's positive input is
-; 0000 00A8 // connected to the AIN0 pin
-; 0000 00A9 // The Analog Comparator's negative input is
-; 0000 00AA // connected to the AIN1 pin
-; 0000 00AB ACSR=(1<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (0<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
 ;PCODE: $00000456 VOL: 0
 ;PCODE: $00000457 VOL: 0
-; 0000 00AC 
-; 0000 00AD // ADC initialization
-; 0000 00AE // ADC Clock frequency: 1000.000 kHz
-; 0000 00AF // ADC Voltage Reference: AREF pin
-; 0000 00B0 ADMUX=ADC_VREF_TYPE;
+; 0000 005F     glcd_outtext("Node: ");
 ;PCODE: $00000458 VOL: 0
 ;PCODE: $00000459 VOL: 0
-; 0000 00B1 ADCSRA=(1<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
 ;PCODE: $0000045A VOL: 0
+; 0000 0060     glcd_moveto(40, 3);
 ;PCODE: $0000045B VOL: 0
-; 0000 00B2 SFIOR=(0<<ACME);
 ;PCODE: $0000045C VOL: 0
 ;PCODE: $0000045D VOL: 0
-; 0000 00B3 
-; 0000 00B4 // SPI initialization
-; 0000 00B5 // SPI disabled
-; 0000 00B6 SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
 ;PCODE: $0000045E VOL: 0
+; 0000 0061     glcd_outtext("1");
 ;PCODE: $0000045F VOL: 0
-; 0000 00B7 
-; 0000 00B8 // TWI initialization
-; 0000 00B9 // TWI disabled
-; 0000 00BA TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
 ;PCODE: $00000460 VOL: 0
 ;PCODE: $00000461 VOL: 0
-; 0000 00BB 
-; 0000 00BC // Graphic Display Controller initialization
-; 0000 00BD // The PCD8544 connections are specified in the
-; 0000 00BE // Project|Configure|C Compiler|Libraries|Graphic Display menu:
-; 0000 00BF // SDIN - PORTC Bit 3
-; 0000 00C0 // SCLK - PORTC Bit 4
-; 0000 00C1 // D /C - PORTC Bit 2
-; 0000 00C2 // /SCE - PORTC Bit 1
-; 0000 00C3 // /RES - PORTC Bit 0
-; 0000 00C4 
-; 0000 00C5 // Specify the current font for displaying text
-; 0000 00C6 glcd_init_data.font=font5x7;
+; 0000 0062 
+; 0000 0063     glcd_moveto(4, 18);
 ;PCODE: $00000462 VOL: 0
 ;PCODE: $00000463 VOL: 0
-; 0000 00C7 // No function is used for reading
-; 0000 00C8 // image data from external memory
-; 0000 00C9 glcd_init_data.readxmem=NULL;
 ;PCODE: $00000464 VOL: 0
 ;PCODE: $00000465 VOL: 0
-; 0000 00CA // No function is used for writing
-; 0000 00CB // image data to external memory
-; 0000 00CC glcd_init_data.writexmem=NULL;
+; 0000 0064     glcd_outtext("Temp: ");
 ;PCODE: $00000466 VOL: 0
 ;PCODE: $00000467 VOL: 0
-; 0000 00CD // Set the LCD temperature coefficient
-; 0000 00CE glcd_init_data.temp_coef=139;
 ;PCODE: $00000468 VOL: 0
+; 0000 0065     glcd_moveto(4, 28);
 ;PCODE: $00000469 VOL: 0
 ;PCODE: $0000046A VOL: 0
-; 0000 00CF // Set the LCD bias
-; 0000 00D0 glcd_init_data.bias=4;
 ;PCODE: $0000046B VOL: 0
 ;PCODE: $0000046C VOL: 0
+; 0000 0066     glcd_outtext("Humid: ");
 ;PCODE: $0000046D VOL: 0
 ;PCODE: $0000046E VOL: 0
-; 0000 00D1 // Set the LCD contrast control voltage VLCD
-; 0000 00D2 glcd_init_data.vlcd=69;
 ;PCODE: $0000046F VOL: 0
+; 0000 0067     glcd_moveto(4, 37);
 ;PCODE: $00000470 VOL: 0
 ;PCODE: $00000471 VOL: 0
 ;PCODE: $00000472 VOL: 0
-; 0000 00D3 
-; 0000 00D4 #asm("sei")
 ;PCODE: $00000473 VOL: 0
-	sei
+; 0000 0068     glcd_outtext("Water: ");
 ;PCODE: $00000474 VOL: 0
-; 0000 00D5 
-; 0000 00D6 glcd_init(&glcd_init_data);
 ;PCODE: $00000475 VOL: 0
 ;PCODE: $00000476 VOL: 0
-; 0000 00D7 PORTC.5 = 0;
+; 0000 0069     glcd_moveto(68, 18);
 ;PCODE: $00000477 VOL: 0
 ;PCODE: $00000478 VOL: 0
-; 0000 00D8 
-; 0000 00D9 config();
 ;PCODE: $00000479 VOL: 0
-; 0000 00DA RF_Init_RX();
 ;PCODE: $0000047A VOL: 0
-; 0000 00DB RF_Config_TX();
+; 0000 006A     glcd_outtext("!C");
 ;PCODE: $0000047B VOL: 0
-; 0000 00DC RF_Mode_TX();
 ;PCODE: $0000047C VOL: 0
-; 0000 00DD 
-; 0000 00DE glcd_line(48,0, 48, 15);
 ;PCODE: $0000047D VOL: 0
+; 0000 006B     glcd_moveto(69, 28);
 ;PCODE: $0000047E VOL: 0
 ;PCODE: $0000047F VOL: 0
 ;PCODE: $00000480 VOL: 0
 ;PCODE: $00000481 VOL: 0
+; 0000 006C     glcd_putchar(37);
 ;PCODE: $00000482 VOL: 0
 ;PCODE: $00000483 VOL: 0
+; 0000 006D     glcd_moveto(69, 37);
 ;PCODE: $00000484 VOL: 0
-; 0000 00DF glcd_line(0, 15, 48, 15);
 ;PCODE: $00000485 VOL: 0
 ;PCODE: $00000486 VOL: 0
 ;PCODE: $00000487 VOL: 0
+; 0000 006E     glcd_outtext("cm");
 ;PCODE: $00000488 VOL: 0
 ;PCODE: $00000489 VOL: 0
 ;PCODE: $0000048A VOL: 0
+; 0000 006F }
 ;PCODE: $0000048B VOL: 0
 ;PCODE: $0000048C VOL: 0
-; 0000 00E0 glcd_line(0,0,84,0);
+
+	.DSEG
+_0xD3:
+	.BYTE 0x26
+;
+;void main(void)
+; 0000 0072 {
+
+	.CSEG
 ;PCODE: $0000048D VOL: 0
+; 0000 0073 // Declare your local variables here
+; 0000 0074 // Variable used to store graphic display
+; 0000 0075 // controller initialization data
+; 0000 0076 GLCDINIT_t glcd_init_data;
+; 0000 0077 
+; 0000 0078 // Input/Output Ports initialization
+; 0000 0079 // Port B initialization
+; 0000 007A // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 007B DDRB=(0<<DDB7) | (1<<DDB6) | (1<<DDB5) | (0<<DDB4) | (0<<DDB3) | (0<<DDB2) | (0<<DDB1) | (0<<DDB0);
 ;PCODE: $0000048E VOL: 0
+;	glcd_init_data -> Y+0
 ;PCODE: $0000048F VOL: 0
 ;PCODE: $00000490 VOL: 0
+; 0000 007C // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 007D PORTB=(1<<PORTB7) | (1<<PORTB6) | (1<<PORTB5) | (1<<PORTB4) | (0<<PORTB3) | (0<<PORTB2) | (0<<PORTB1) | (0<<PORTB0);
 ;PCODE: $00000491 VOL: 0
 ;PCODE: $00000492 VOL: 0
+; 0000 007E 
+; 0000 007F // Port C initialization
+; 0000 0080 // Function: Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 0081 DDRC=(0<<DDC6) | (1<<DDC5) | (0<<DDC4) | (0<<DDC3) | (0<<DDC2) | (0<<DDC1) | (0<<DDC0);
 ;PCODE: $00000493 VOL: 0
 ;PCODE: $00000494 VOL: 0
-; 0000 00E1 glcd_line(84,0, 84, 48);
+; 0000 0082 // State: Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 0083 PORTC=(0<<PORTC6) | (1<<PORTC5) | (0<<PORTC4) | (0<<PORTC3) | (0<<PORTC2) | (0<<PORTC1) | (0<<PORTC0);
 ;PCODE: $00000495 VOL: 0
 ;PCODE: $00000496 VOL: 0
+; 0000 0084 
+; 0000 0085 // Port D initialization
+; 0000 0086 // Function: Bit7=In Bit6=In Bit5=In Bit4=In Bit3=In Bit2=In Bit1=In Bit0=In
+; 0000 0087 DDRD=(0<<DDD7) | (0<<DDD6) | (0<<DDD5) | (1<<DDD4) | (1<<DDD3) | (1<<DDD2) | (0<<DDD1) | (0<<DDD0);
 ;PCODE: $00000497 VOL: 0
 ;PCODE: $00000498 VOL: 0
+; 0000 0088 // State: Bit7=T Bit6=T Bit5=T Bit4=T Bit3=T Bit2=T Bit1=T Bit0=T
+; 0000 0089 PORTD=(0<<PORTD7) | (0<<PORTD6) | (0<<PORTD5) | (1<<PORTD4) | (1<<PORTD3) | (1<<PORTD2) | (1<<PORTD1) | (0<<PORTD0);
 ;PCODE: $00000499 VOL: 0
 ;PCODE: $0000049A VOL: 0
+; 0000 008A 
+; 0000 008B // Timer/Counter 0 initialization
+; 0000 008C // Clock source: System Clock
+; 0000 008D // Clock value: Timer 0 Stopped
+; 0000 008E TCCR0=(0<<CS02) | (1<<CS01) | (0<<CS00);
 ;PCODE: $0000049B VOL: 0
 ;PCODE: $0000049C VOL: 0
-; 0000 00E2 glcd_line(0, 48, 84, 48);
+; 0000 008F TCNT0=0x9C;
 ;PCODE: $0000049D VOL: 0
 ;PCODE: $0000049E VOL: 0
+; 0000 0090 
+; 0000 0091 // Timer/Counter 1 initialization
+; 0000 0092 // Clock source: System Clock
+; 0000 0093 // Clock value: Timer1 Stopped
+; 0000 0094 // Mode: Normal top=0xFFFF
+; 0000 0095 // OC1A output: Disconnected
+; 0000 0096 // OC1B output: Disconnected
+; 0000 0097 // Noise Canceler: Off
+; 0000 0098 // Input Capture on Falling Edge
+; 0000 0099 // Timer1 Overflow Interrupt: Off
+; 0000 009A // Input Capture Interrupt: Off
+; 0000 009B // Compare A Match Interrupt: Off
+; 0000 009C // Compare B Match Interrupt: Off
+; 0000 009D TCCR1A=(0<<COM1A1) | (0<<COM1A0) | (0<<COM1B1) | (0<<COM1B0) | (0<<WGM11) | (0<<WGM10);
 ;PCODE: $0000049F VOL: 0
 ;PCODE: $000004A0 VOL: 0
+; 0000 009E TCCR1B=(0<<ICNC1) | (0<<ICES1) | (0<<WGM13) | (0<<WGM12) | (0<<CS12) | (0<<CS11) | (0<<CS10);
 ;PCODE: $000004A1 VOL: 0
 ;PCODE: $000004A2 VOL: 0
+; 0000 009F TCNT1H=0x00;
 ;PCODE: $000004A3 VOL: 0
 ;PCODE: $000004A4 VOL: 0
-; 0000 00E3 glcd_line(0, 0, 0, 48);
+; 0000 00A0 TCNT1L=0x00;
 ;PCODE: $000004A5 VOL: 0
 ;PCODE: $000004A6 VOL: 0
+; 0000 00A1 ICR1H=0x00;
 ;PCODE: $000004A7 VOL: 0
 ;PCODE: $000004A8 VOL: 0
+; 0000 00A2 ICR1L=0x00;
 ;PCODE: $000004A9 VOL: 0
 ;PCODE: $000004AA VOL: 0
+; 0000 00A3 OCR1AH=0x00;
 ;PCODE: $000004AB VOL: 0
 ;PCODE: $000004AC VOL: 0
-; 0000 00E4 glcd_moveto(3,3);
+; 0000 00A4 OCR1AL=0x00;
 ;PCODE: $000004AD VOL: 0
 ;PCODE: $000004AE VOL: 0
+; 0000 00A5 OCR1BH=0x00;
 ;PCODE: $000004AF VOL: 0
 ;PCODE: $000004B0 VOL: 0
-; 0000 00E5 glcd_outtext("Node: ");
+; 0000 00A6 OCR1BL=0x00;
 ;PCODE: $000004B1 VOL: 0
 ;PCODE: $000004B2 VOL: 0
+; 0000 00A7 
+; 0000 00A8 // Timer/Counter 2 initialization
+; 0000 00A9 // Clock source: System Clock
+; 0000 00AA // Clock value: Timer2 Stopped
+; 0000 00AB // Mode: Normal top=0xFF
+; 0000 00AC // OC2 output: Disconnected
+; 0000 00AD ASSR=0<<AS2;
 ;PCODE: $000004B3 VOL: 0
-; 0000 00E6 glcd_moveto(40, 3);
 ;PCODE: $000004B4 VOL: 0
+; 0000 00AE TCCR2=(0<<PWM2) | (0<<COM21) | (0<<COM20) | (0<<CTC2) | (0<<CS22) | (0<<CS21) | (0<<CS20);
 ;PCODE: $000004B5 VOL: 0
 ;PCODE: $000004B6 VOL: 0
+; 0000 00AF TCNT2=0x00;
 ;PCODE: $000004B7 VOL: 0
-; 0000 00E7 glcd_outtext("1");
 ;PCODE: $000004B8 VOL: 0
+; 0000 00B0 OCR2=0x00;
 ;PCODE: $000004B9 VOL: 0
 ;PCODE: $000004BA VOL: 0
-; 0000 00E8 
-; 0000 00E9 glcd_moveto(4, 18);
+; 0000 00B1 
+; 0000 00B2 // Timer(s)/Counter(s) Interrupt(s) initialization
+; 0000 00B3 TIMSK=(0<<OCIE2) | (0<<TOIE2) | (0<<TICIE1) | (0<<OCIE1A) | (0<<OCIE1B) | (0<<TOIE1) | (1<<TOIE0);
 ;PCODE: $000004BB VOL: 0
 ;PCODE: $000004BC VOL: 0
+; 0000 00B4 
+; 0000 00B5 // External Interrupt(s) initialization
+; 0000 00B6 // INT0: Off
+; 0000 00B7 // INT1: Off
+; 0000 00B8 MCUCR=(0<<ISC11) | (0<<ISC10) | (0<<ISC01) | (0<<ISC00);
 ;PCODE: $000004BD VOL: 0
 ;PCODE: $000004BE VOL: 0
-; 0000 00EA glcd_outtext("Temp: ");
+; 0000 00B9 
+; 0000 00BA // USART initialization
+; 0000 00BB // USART disabled
+; 0000 00BC UCSRB=(0<<RXCIE) | (0<<TXCIE) | (0<<UDRIE) | (0<<RXEN) | (0<<TXEN) | (0<<UCSZ2) | (0<<RXB8) | (0<<TXB8);
 ;PCODE: $000004BF VOL: 0
 ;PCODE: $000004C0 VOL: 0
+; 0000 00BD 
+; 0000 00BE // Analog Comparator initialization
+; 0000 00BF // Analog Comparator: Off
+; 0000 00C0 // The Analog Comparator's positive input is
+; 0000 00C1 // connected to the AIN0 pin
+; 0000 00C2 // The Analog Comparator's negative input is
+; 0000 00C3 // connected to the AIN1 pin
+; 0000 00C4 ACSR=(1<<ACD) | (0<<ACBG) | (0<<ACO) | (0<<ACI) | (0<<ACIE) | (0<<ACIC) | (0<<ACIS1) | (0<<ACIS0);
 ;PCODE: $000004C1 VOL: 0
-; 0000 00EB glcd_moveto(4, 28);
 ;PCODE: $000004C2 VOL: 0
+; 0000 00C5 
+; 0000 00C6 // ADC initialization
+; 0000 00C7 // ADC Clock frequency: 1000.000 kHz
+; 0000 00C8 // ADC Voltage Reference: AREF pin
+; 0000 00C9 ADMUX=ADC_VREF_TYPE;
 ;PCODE: $000004C3 VOL: 0
 ;PCODE: $000004C4 VOL: 0
+; 0000 00CA ADCSRA=(1<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
 ;PCODE: $000004C5 VOL: 0
-; 0000 00EC glcd_outtext("Humid: ");
 ;PCODE: $000004C6 VOL: 0
+; 0000 00CB SFIOR=(0<<ACME);
 ;PCODE: $000004C7 VOL: 0
 ;PCODE: $000004C8 VOL: 0
-; 0000 00ED glcd_moveto(4, 37);
+; 0000 00CC 
+; 0000 00CD // SPI initialization
+; 0000 00CE // SPI disabled
+; 0000 00CF SPCR=(0<<SPIE) | (0<<SPE) | (0<<DORD) | (0<<MSTR) | (0<<CPOL) | (0<<CPHA) | (0<<SPR1) | (0<<SPR0);
 ;PCODE: $000004C9 VOL: 0
 ;PCODE: $000004CA VOL: 0
+; 0000 00D0 
+; 0000 00D1 // TWI initialization
+; 0000 00D2 // TWI disabled
+; 0000 00D3 TWCR=(0<<TWEA) | (0<<TWSTA) | (0<<TWSTO) | (0<<TWEN) | (0<<TWIE);
 ;PCODE: $000004CB VOL: 0
 ;PCODE: $000004CC VOL: 0
-; 0000 00EE glcd_outtext("Water: ");
+; 0000 00D4 
+; 0000 00D5 // Graphic Display Controller initialization
+; 0000 00D6 // The PCD8544 connections are specified in the
+; 0000 00D7 // Project|Configure|C Compiler|Libraries|Graphic Display menu:
+; 0000 00D8 // SDIN - PORTC Bit 3
+; 0000 00D9 // SCLK - PORTC Bit 4
+; 0000 00DA // D /C - PORTC Bit 2
+; 0000 00DB // /SCE - PORTC Bit 1
+; 0000 00DC // /RES - PORTC Bit 0
+; 0000 00DD 
+; 0000 00DE // Specify the current font for displaying text
+; 0000 00DF glcd_init_data.font=font5x7;
 ;PCODE: $000004CD VOL: 0
 ;PCODE: $000004CE VOL: 0
+; 0000 00E0 // No function is used for reading
+; 0000 00E1 // image data from external memory
+; 0000 00E2 glcd_init_data.readxmem=NULL;
 ;PCODE: $000004CF VOL: 0
-; 0000 00EF 
-; 0000 00F0 glcd_moveto(67, 28);
 ;PCODE: $000004D0 VOL: 0
+; 0000 00E3 // No function is used for writing
+; 0000 00E4 // image data to external memory
+; 0000 00E5 glcd_init_data.writexmem=NULL;
 ;PCODE: $000004D1 VOL: 0
 ;PCODE: $000004D2 VOL: 0
+; 0000 00E6 // Set the LCD temperature coefficient
+; 0000 00E7 glcd_init_data.temp_coef=139;
 ;PCODE: $000004D3 VOL: 0
-; 0000 00F1 glcd_putchar(37);
 ;PCODE: $000004D4 VOL: 0
 ;PCODE: $000004D5 VOL: 0
-; 0000 00F2 glcd_moveto(67, 37);
+; 0000 00E8 // Set the LCD bias
+; 0000 00E9 glcd_init_data.bias=4;
 ;PCODE: $000004D6 VOL: 0
 ;PCODE: $000004D7 VOL: 0
 ;PCODE: $000004D8 VOL: 0
 ;PCODE: $000004D9 VOL: 0
-; 0000 00F3 glcd_outtext("mm");
+; 0000 00EA // Set the LCD contrast control voltage VLCD
+; 0000 00EB glcd_init_data.vlcd=69;
 ;PCODE: $000004DA VOL: 0
 ;PCODE: $000004DB VOL: 0
 ;PCODE: $000004DC VOL: 0
-; 0000 00F4 
-; 0000 00F5 while (1){
 ;PCODE: $000004DD VOL: 0
-; 0000 00F6         if(DHT_GetTemHumi(&dht_nhiet_do,&dht_do_am)){
+; 0000 00EC 
+; 0000 00ED #asm("sei")
 ;PCODE: $000004DE VOL: 0
+	sei
 ;PCODE: $000004DF VOL: 0
+; 0000 00EE 
+; 0000 00EF glcd_init(&glcd_init_data);
 ;PCODE: $000004E0 VOL: 0
 ;PCODE: $000004E1 VOL: 0
+; 0000 00F0 PORTC.5 = 0;
 ;PCODE: $000004E2 VOL: 0
 ;PCODE: $000004E3 VOL: 0
-; 0000 00F7             sprintf(buff, "%u", (unsigned int)dht_do_am);
+; 0000 00F1 
+; 0000 00F2 config();
 ;PCODE: $000004E4 VOL: 0
+; 0000 00F3 RF_Init_RX();
 ;PCODE: $000004E5 VOL: 0
+; 0000 00F4 RF_Config_TX();
 ;PCODE: $000004E6 VOL: 0
+; 0000 00F5 RF_Mode_TX();
 ;PCODE: $000004E7 VOL: 0
+; 0000 00F6 border();
 ;PCODE: $000004E8 VOL: 0
+; 0000 00F7 while (1){
 ;PCODE: $000004E9 VOL: 0
+; 0000 00F8         if(DHT_GetTemHumi(&dht_nhiet_do,&dht_do_am)){
 ;PCODE: $000004EA VOL: 0
 ;PCODE: $000004EB VOL: 0
 ;PCODE: $000004EC VOL: 0
 ;PCODE: $000004ED VOL: 0
 ;PCODE: $000004EE VOL: 0
 ;PCODE: $000004EF VOL: 0
+; 0000 00F9             sprintf(buff, "%u", (unsigned int)dht_do_am);
 ;PCODE: $000004F0 VOL: 0
-; 0000 00F8             glcd_moveto(50, 28);
 ;PCODE: $000004F1 VOL: 0
 ;PCODE: $000004F2 VOL: 0
 ;PCODE: $000004F3 VOL: 0
 ;PCODE: $000004F4 VOL: 0
-; 0000 00F9             glcd_outtext(buff);
 ;PCODE: $000004F5 VOL: 0
 ;PCODE: $000004F6 VOL: 0
-; 0000 00FA             sprintf(buff, "%u  ", (unsigned int)dht_nhiet_do);
 ;PCODE: $000004F7 VOL: 0
 ;PCODE: $000004F8 VOL: 0
 ;PCODE: $000004F9 VOL: 0
 ;PCODE: $000004FA VOL: 0
 ;PCODE: $000004FB VOL: 0
 ;PCODE: $000004FC VOL: 0
+; 0000 00FA             glcd_moveto(50, 28);
 ;PCODE: $000004FD VOL: 0
 ;PCODE: $000004FE VOL: 0
 ;PCODE: $000004FF VOL: 0
 ;PCODE: $00000500 VOL: 0
+; 0000 00FB             glcd_outtext(buff);
 ;PCODE: $00000501 VOL: 0
 ;PCODE: $00000502 VOL: 0
+; 0000 00FC             sprintf(buff, "%u  ", (unsigned int)dht_nhiet_do);
 ;PCODE: $00000503 VOL: 0
-; 0000 00FB             glcd_moveto(50, 18);
 ;PCODE: $00000504 VOL: 0
 ;PCODE: $00000505 VOL: 0
 ;PCODE: $00000506 VOL: 0
 ;PCODE: $00000507 VOL: 0
-; 0000 00FC             glcd_outtext(buff);
 ;PCODE: $00000508 VOL: 0
 ;PCODE: $00000509 VOL: 0
-; 0000 00FD         }
-; 0000 00FE 
-; 0000 00FF         set_up_sieu_am();
 ;PCODE: $0000050A VOL: 0
 ;PCODE: $0000050B VOL: 0
-; 0000 0100         glcd_moveto(50, 37);
 ;PCODE: $0000050C VOL: 0
 ;PCODE: $0000050D VOL: 0
 ;PCODE: $0000050E VOL: 0
 ;PCODE: $0000050F VOL: 0
-; 0000 0101         if((int)distance > 20)
+; 0000 00FD             glcd_moveto(50, 18);
 ;PCODE: $00000510 VOL: 0
 ;PCODE: $00000511 VOL: 0
 ;PCODE: $00000512 VOL: 0
 ;PCODE: $00000513 VOL: 0
-; 0000 0102             sprintf(buff, "NaN");
+; 0000 00FE             glcd_outtext(buff);
 ;PCODE: $00000514 VOL: 0
 ;PCODE: $00000515 VOL: 0
+; 0000 00FF         }
+; 0000 0100 
+; 0000 0101         set_up_sieu_am();
 ;PCODE: $00000516 VOL: 0
 ;PCODE: $00000517 VOL: 0
+; 0000 0102         glcd_moveto(50, 37);
 ;PCODE: $00000518 VOL: 0
 ;PCODE: $00000519 VOL: 0
 ;PCODE: $0000051A VOL: 0
 ;PCODE: $0000051B VOL: 0
+; 0000 0103         if((int)distance > 20)
 ;PCODE: $0000051C VOL: 0
-; 0000 0103         else
 ;PCODE: $0000051D VOL: 0
 ;PCODE: $0000051E VOL: 0
-; 0000 0104             sprintf(buff, "%d ", (int)distance);
 ;PCODE: $0000051F VOL: 0
+; 0000 0104             sprintf(buff, "* ");
 ;PCODE: $00000520 VOL: 0
 ;PCODE: $00000521 VOL: 0
 ;PCODE: $00000522 VOL: 0
@@ -1629,72 +1635,118 @@
 ;PCODE: $00000526 VOL: 0
 ;PCODE: $00000527 VOL: 0
 ;PCODE: $00000528 VOL: 0
+; 0000 0105         else
 ;PCODE: $00000529 VOL: 0
 ;PCODE: $0000052A VOL: 0
+; 0000 0106             sprintf(buff, "%d ", (int)distance);
 ;PCODE: $0000052B VOL: 0
-; 0000 0105         glcd_outtext(buff);
 ;PCODE: $0000052C VOL: 0
 ;PCODE: $0000052D VOL: 0
 ;PCODE: $0000052E VOL: 0
-; 0000 0106 
-; 0000 0107         data_send.flag = 1;
 ;PCODE: $0000052F VOL: 0
 ;PCODE: $00000530 VOL: 0
-; 0000 0108         data_send.temp = (long int)dht_nhiet_do;
 ;PCODE: $00000531 VOL: 0
 ;PCODE: $00000532 VOL: 0
 ;PCODE: $00000533 VOL: 0
 ;PCODE: $00000534 VOL: 0
 ;PCODE: $00000535 VOL: 0
-; 0000 0109         data_send.humi = (long int)dht_do_am;
 ;PCODE: $00000536 VOL: 0
 ;PCODE: $00000537 VOL: 0
+; 0000 0107         glcd_outtext(buff);
 ;PCODE: $00000538 VOL: 0
 ;PCODE: $00000539 VOL: 0
 ;PCODE: $0000053A VOL: 0
-; 0000 010A         data_send.light = (long int)read_adc(6)/4;
+; 0000 0108 
+; 0000 0109         glcd_moveto(55, 3);
 ;PCODE: $0000053B VOL: 0
 ;PCODE: $0000053C VOL: 0
 ;PCODE: $0000053D VOL: 0
 ;PCODE: $0000053E VOL: 0
+; 0000 010A         //sprintf(buff, "%d ", (int)read_adc(6)/3);
+; 0000 010B         //glcd_outtext(buff);
+; 0000 010C 
+; 0000 010D 
+; 0000 010E         if((int)read_adc(6)/3 < 200){
 ;PCODE: $0000053F VOL: 0
 ;PCODE: $00000540 VOL: 0
 ;PCODE: $00000541 VOL: 0
 ;PCODE: $00000542 VOL: 0
-; 0000 010B         data_send.sm = (long int)read_adc(7)/4;
 ;PCODE: $00000543 VOL: 0
 ;PCODE: $00000544 VOL: 0
 ;PCODE: $00000545 VOL: 0
+; 0000 010F             data_send.light = 1;
 ;PCODE: $00000546 VOL: 0
 ;PCODE: $00000547 VOL: 0
 ;PCODE: $00000548 VOL: 0
+; 0000 0110             glcd_outtext("Rain ");
 ;PCODE: $00000549 VOL: 0
 ;PCODE: $0000054A VOL: 0
-; 0000 010C         data_send.water = (long int)distance;
 ;PCODE: $0000054B VOL: 0
+; 0000 0111         }
+; 0000 0112         else{
 ;PCODE: $0000054C VOL: 0
 ;PCODE: $0000054D VOL: 0
+; 0000 0113             data_send.light = 0;
 ;PCODE: $0000054E VOL: 0
-; 0000 010D 
-; 0000 010E         RF_Send_TX(data_send);
 ;PCODE: $0000054F VOL: 0
 ;PCODE: $00000550 VOL: 0
+; 0000 0114             glcd_outtext("Sun ");
 ;PCODE: $00000551 VOL: 0
-; 0000 010F 
-; 0000 0110         delay_ms(200);
 ;PCODE: $00000552 VOL: 0
 ;PCODE: $00000553 VOL: 0
+; 0000 0115         }
 ;PCODE: $00000554 VOL: 0
-; 0000 0111 
-; 0000 0112         }
+; 0000 0116 
+; 0000 0117         data_send.flag = 1;
 ;PCODE: $00000555 VOL: 0
 ;PCODE: $00000556 VOL: 0
-; 0000 0113 }
+; 0000 0118         data_send.temp = (long int)dht_nhiet_do;
 ;PCODE: $00000557 VOL: 0
 ;PCODE: $00000558 VOL: 0
 ;PCODE: $00000559 VOL: 0
 ;PCODE: $0000055A VOL: 0
+;PCODE: $0000055B VOL: 0
+; 0000 0119         data_send.humi = (long int)dht_do_am;
+;PCODE: $0000055C VOL: 0
+;PCODE: $0000055D VOL: 0
+;PCODE: $0000055E VOL: 0
+;PCODE: $0000055F VOL: 0
+;PCODE: $00000560 VOL: 0
+; 0000 011A 
+; 0000 011B         data_send.sm = (long int)read_adc(7)/4;
+;PCODE: $00000561 VOL: 0
+;PCODE: $00000562 VOL: 0
+;PCODE: $00000563 VOL: 0
+;PCODE: $00000564 VOL: 0
+;PCODE: $00000565 VOL: 0
+;PCODE: $00000566 VOL: 0
+;PCODE: $00000567 VOL: 0
+;PCODE: $00000568 VOL: 0
+; 0000 011C         data_send.water = (long int)distance;
+;PCODE: $00000569 VOL: 0
+;PCODE: $0000056A VOL: 0
+;PCODE: $0000056B VOL: 0
+;PCODE: $0000056C VOL: 0
+; 0000 011D 
+; 0000 011E         RF_Send_TX(data_send);
+;PCODE: $0000056D VOL: 0
+;PCODE: $0000056E VOL: 0
+;PCODE: $0000056F VOL: 0
+; 0000 011F 
+; 0000 0120         delay_ms(200);
+;PCODE: $00000570 VOL: 0
+;PCODE: $00000571 VOL: 0
+;PCODE: $00000572 VOL: 0
+; 0000 0121 
+; 0000 0122         }
+;PCODE: $00000573 VOL: 0
+;PCODE: $00000574 VOL: 0
+; 0000 0123 }
+;PCODE: $00000575 VOL: 0
+;PCODE: $00000576 VOL: 0
+;PCODE: $00000577 VOL: 0
+;PCODE: $00000578 VOL: 0
 
 	.DSEG
-_0xD5:
-	.BYTE 0x23
+_0xDD:
+	.BYTE 0xB
