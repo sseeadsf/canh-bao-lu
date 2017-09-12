@@ -1,0 +1,65 @@
+void border()
+{
+    glcd_line(48,0, 48, 15);
+    glcd_line(0, 15, 48, 15);
+    glcd_line(0,0,84,0);
+    glcd_line(84,0, 84, 48);
+    glcd_line(0, 48, 84, 48);
+    glcd_line(0, 0, 0, 48);
+    glcd_moveto(3,3);
+    glcd_outtext("Node: ");
+   // glcd_moveto(40, 3);
+   // glcd_outtext("4");
+                    
+    glcd_moveto(4, 18);
+    glcd_outtext("Temp: ");
+    glcd_moveto(4, 28);
+    glcd_outtext("Humid: ");
+    glcd_moveto(4, 37);
+    glcd_outtext("Water: ");
+    glcd_moveto(68, 18);
+    glcd_outtext("!C");    
+    glcd_moveto(69, 28);
+    glcd_putchar(37);
+    glcd_moveto(69, 37);
+    glcd_outtext("cm");	
+}
+void temp()
+{
+     glcd_moveto(50, 28);
+     glcd_outtext("21");
+     glcd_moveto(50, 18);
+     glcd_outtext("75"); 
+     glcd_moveto(50, 37); 
+     glcd_outtext("45");          
+}
+void wifi_connect()
+{
+	glcd_moveto(10,10); 
+    glcd_clear();
+    glcd_outtext("Booting");
+    delay_ms(2000);
+	put_string("AT\r\n"); 
+    wait_until("OK", 2);
+    refresh(0);
+	delay_ms(100);
+        put_string("AT+CIPSTATUS\r\n");
+        wait_until("OK", 2);
+     //   refresh(0);
+        if (strstr(buff, "STATUS:2")) {
+            glcd_outtext("Wifi Connected\r\n");
+        } 
+        else 
+        {
+            put_string("AT+CWMODE=1\r\n");
+            wait_until("OK", 2);
+           // refresh(0);
+            put_string("AT+CWJAP=\"Thay_Thao_deo_giai\",\"chinhxac\"\r\n");
+            wait_until("OK", 10);
+       //     refresh(0);      
+       PORTA.6=!PORTA.6;
+        }
+    
+  //  refresh(0); 
+}     
+

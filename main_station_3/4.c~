@@ -1,0 +1,17 @@
+/*
+ * 4.c
+ *
+ * Created: 9/11/2017 12:24:09 PM
+ * Author: 108_T3
+ */
+
+#include <io.h>
+
+void main(void)
+{
+while (1)
+    {
+    // Please write your application code here
+
+    }
+}
