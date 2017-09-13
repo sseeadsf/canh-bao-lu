@@ -47,7 +47,7 @@ char buff[260];
 int i = 0, time_flow = 0, time_s = 0;
 bool flag = false;
 int dem;
-int count;
+int count = 1;
 //unsigned char start_h, start_m, start_s, end_h, end_m, end_s;
 int rain_state[5];
 long rain_count;
@@ -228,6 +228,7 @@ void wait_until(unsigned char *keyword, int time_out_s) {
         }
     }
 }
+
 #define CE PORTA.3
 #define CSN PORTA.2
 #define SCK PORTA.4
@@ -242,6 +243,40 @@ bool flag;
 unsigned char* key[] = {"", "7R6NSYFHBFRUAR6K", "5I000WROXOFS0V85", "6NHFXH076SC02DZ0", "WUIT8LX7N92X8J4W"};
 char cmd[250];
 #include "s_function.c"
+interrupt [EXT_INT6] void ext_int6_isr(void)
+{
+if(start_rain == true){
+    PORTA.6 = !PORTA.6;
+    rain_count++;      
+}
+
+}
+
+// External Interrupt 7 service routine
+interrupt [EXT_INT7] void ext_int7_isr(void)
+{
+if(start_rain == true){
+    PORTA.6 = !PORTA.6;
+    rain_count++;      
+}
+
+}
+
+#define ADC_VREF_TYPE ((0<<REFS1) | (0<<REFS0) | (0<<ADLAR))
+
+// Read the AD conversion result
+unsigned int read_adc(unsigned char adc_input)
+{
+ADMUX=adc_input | ADC_VREF_TYPE;
+// Delay needed for the stabilization of the ADC input voltage
+delay_us(10);
+// Start the AD conversion
+ADCSRA|=(1<<ADSC);
+// Wait for the AD conversion to complete
+while ((ADCSRA & (1<<ADIF))==0);
+ADCSRA|=(1<<ADIF);
+return ADCW;
+}
 
 void read_and_send(unsigned char *s){
     // Thay nhung ham respones_read bang ham wait_until
@@ -301,28 +336,37 @@ void read_and_send(unsigned char *s){
 }
 
 void check_rain(){
-    if(rain_state[1] == 0 && rain_state[2] == 0 && rain_state[3] == 0 && rain_state[4] == 0){
+    if(read_adc(6) < 500){
+        start_rain = true;
         glcd_clear();
+        while(1){
+            glcd_moveto(0,0);
+            glcd_outtext("rainning");
+            if(menu == 0){
+                start_rain = false;
+                print_rain();
+                delay_ms(800);
+                glcd_clear();
+                break; 
+            }
+            if(read_adc(6) > 500){
+                start_rain = false;
+                print_rain();
+                delay_ms(800);
+                glcd_clear();
+                break;
+            }
+        }
+    }
+}
+    
+void print_rain(){
         //rtc_get_time(&end_h, &end_m, &end_s);       
-        glcd_moveto(0,0);
+        glcd_moveto(55,3);
         itoa(rain_count, buff);
         glcd_outtext(buff);
         start_rain = false; 
         rain_count = 0;
-    }
-}
-
-interrupt [EXT_INT6] void ext_int6_isr(void)
-{
-rain_count++;
-
-}
-
-// External Interrupt 7 service routine
-interrupt [EXT_INT7] void ext_int7_isr(void)
-{
-rain_count++;
-
 }
 
 
@@ -461,10 +505,12 @@ ETIMSK=(0<<TICIE3) | (0<<OCIE3A) | (0<<OCIE3B) | (0<<TOIE3) | (0<<OCIE3C) | (0<<
 // INT3: Off
 // INT4: Off
 // INT5: Off
-// INT6: Off
-// INT7: Off
+// INT6: On
+// INT6 Mode: Low level
+// INT7: On
+// INT7 Mode: Low level
 EICRA=(0<<ISC31) | (0<<ISC30) | (0<<ISC21) | (0<<ISC20) | (0<<ISC11) | (0<<ISC10) | (0<<ISC01) | (0<<ISC00);
-EICRB=(1<<ISC71) | (1<<ISC70) | (1<<ISC61) | (1<<ISC60) | (0<<ISC51) | (0<<ISC50) | (0<<ISC41) | (0<<ISC40);
+EICRB=(0<<ISC71) | (0<<ISC70) | (0<<ISC61) | (0<<ISC60) | (0<<ISC51) | (0<<ISC50) | (0<<ISC41) | (0<<ISC40);
 EIMSK=(1<<INT7) | (1<<INT6) | (0<<INT5) | (0<<INT4) | (0<<INT3) | (0<<INT2) | (0<<INT1) | (0<<INT0);
 EIFR=(1<<INTF7) | (1<<INTF6) | (0<<INTF5) | (0<<INTF4) | (0<<INTF3) | (0<<INTF2) | (0<<INTF1) | (0<<INTF0);
 
@@ -495,7 +541,9 @@ SFIOR=(0<<ACME);
 
 // ADC initialization
 // ADC disabled
-ADCSRA=(0<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (0<<ADPS1) | (0<<ADPS0);
+ADMUX=ADC_VREF_TYPE;
+ADCSRA=(1<<ADEN) | (0<<ADSC) | (0<<ADFR) | (0<<ADIF) | (0<<ADIE) | (0<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
+SFIOR=(0<<ACME);
 
 // SPI initialization
 // SPI disabled
@@ -548,6 +596,8 @@ glcd_init(&glcd_init_data);
 // Global enable interrupts
 #asm("sei")
 
+glcd_moveto(0,0);
+glcd_outtext("start");
 delay_ms(1000);
 //wifi_connect();
 
@@ -558,8 +608,10 @@ count = 1;
 glcd_clear();
 
 while (1){
+    
     if (menu==0){
-        while(1){    
+        while(1){
+            check_rain();    
             RF_Mode_RX();                      
             if(IRQ == 0){   
                 RF_Read_RX_3(); 
@@ -575,8 +627,14 @@ while (1){
                     sprintf(buff, "%d", station_receive.humi);
                     glcd_outtext(buff);
                     glcd_moveto(46, 37);
-                    sprintf(buff, "%d", station_receive.sm);
-                    glcd_outtext(buff);                
+                    sprintf(buff, "%d", station_receive.sm/10);
+                    glcd_outtext(buff);                      
+                    if(station_receive.sm/10 < 10){
+                        PORTA.3 = 0;
+                    }               
+                    else{
+                        PORTA.3 = 1;
+                    }
                     read_and_send(key[count]);
                     delay_ms(800);
                     count++;
@@ -589,10 +647,9 @@ while (1){
         }
     }
     if (back==0){
-        while(1){
+        while(1){       
             check_rain();
-            RF_Mode_RX();                       
-            if(IRQ == 0){   
+            if(IRQ == 0){ 
                 RF_Read_RX_3(); 
                 if(station_receive.flag == count){
                     border();
@@ -607,26 +664,23 @@ while (1){
                     glcd_outtext(buff);
                     glcd_moveto(46, 37);
                     sprintf(buff, "%d", station_receive.sm);
-                    glcd_outtext(buff);
-                    delay_ms(800);
-                    count++;         
-                    if(station_receive.light == 1){
-                        //rtc_get_time(&start_h, &start_m, &start_s);
-                        start_rain = true;
-                        rain_state[count] = 1; 
-                        
-                    }                                               
-                    else {
-                        rain_state[count] = 0;
+                    glcd_outtext(buff); 
+                    if(station_receive.sm/10 < 10){
+                        PORTA.3 = 0;
+                    }               
+                    else{
+                        PORTA.3 = 1;
                     }
-                    
+                    delay_ms(800);
+                    count++;   
                     if(count == 5)
                         count = 1; 
                     dem = 0;
                     flag = true; 
                 }   
-            }    
+            }
+                
         }
-    }    
+    }  
 }
 }

@@ -16,12 +16,11 @@ typedef struct
 
 typedef struct
 {
-    long int flag;
-    long int light;
-    long int humi;
-    long int temp;
-    long int sm;  
-    long int water;
+    int flag;
+    int light;
+    int humi;
+    int temp;
+    int sm;
 }station_info;
 
 typedef struct
@@ -75,15 +74,14 @@ void RF_Read_RX_2();
 
 void config()
 {
- RF_Write_RX(0x07,0b01111110);  // Clear flag
-   RF_Command_RX(0b11100010);     //Flush RX
+RF_Write_RX(0x07,0b01111110);  // Clear flag
+RF_Command_RX(0b11100010);     //Flush RX
 delay_us(10);
 RF_Write_TX(0x00,0b00011111);     //CONFIG 0x00
 delay_ms(2);
 RF_Write_TX(0x07,0b01111110);
 RF_Write_TX(0x1D, 0b00000100);
 RF_Write_TX(0x05,0b00000010);     //RF_CH 0x05        Choose frequency channel
-RF_Write_TX(0x06, 0b00100000);
 }
 
 
@@ -149,7 +147,7 @@ void RF_Write_Address_TX(unsigned char Address)                      //Function 
     delay_us(10);
 }
 
-void RF_Write_Address_TX_2(unsigned char Address, unsigned char Address2)                      //Function to write TX and RX address
+void RF_Write_Address_TX_2(unsigned char Address)                      //Function to write TX and RX address
 {
     CSN=0;
     RF_Write_TX(0x03,0b00000011);
@@ -158,19 +156,19 @@ void RF_Write_Address_TX_2(unsigned char Address, unsigned char Address2)       
     CSN=0;
     SPI_RW_TX(0b00100000|0x0A);     
     SPI_RW_TX(Address);
-    SPI_RW_TX(Address2);
-    SPI_RW_TX(Address2);
-    SPI_RW_TX(Address2);
-    SPI_RW_TX(Address2);
+    SPI_RW_TX(0x02);
+    SPI_RW_TX(0x02);
+    SPI_RW_TX(0x02);
+    SPI_RW_TX(0x02);
     CSN=1;
     delay_us(10);
     CSN=0;
     SPI_RW_TX(0b00100000|0x10);   
     SPI_RW_TX(Address);
-    SPI_RW_TX(Address2);
-    SPI_RW_TX(Address2);
-    SPI_RW_TX(Address2);
-    SPI_RW_TX(Address2);
+    SPI_RW_TX(0x02);
+    SPI_RW_TX(0x02);
+    SPI_RW_TX(0x02);
+    SPI_RW_TX(0x02);
   
     CSN=1;
     delay_us(10);
@@ -195,7 +193,7 @@ void RF_Config_TX_2()                                                  //Functio
 {
 
 RF_Write_TX(0x1C,0b00000001); 
-RF_Write_Address_TX_2(P_Add, Code_tay_cam2);
+RF_Write_Address_TX_2(P_Add);
 RF_Write_TX(0x02,0b00000001);     //EX_RXADDR 0x02    enable data pipe 0;
 RF_Write_TX(0x01,0b00000001);     //EN_AA 0x01        enable auto-acknowledgment
 }
@@ -225,7 +223,6 @@ void RF_Send_TX(station_info send)     //Function to send data Value to a specif
   SPI_RW_TX(send.humi);
   SPI_RW_TX(send.temp);
   SPI_RW_TX(send.sm);
-  SPI_RW_TX(send.water);
   CSN=1;
   CE=1;
   delay_us(500);
@@ -239,10 +236,10 @@ void RF_Send_TX(station_info send)     //Function to send data Value to a specif
   return tx_ok; */
 }
 
-void RF_Send_TX_2(station_info send)     //Function to send data Value to a specify RX Address
+void RF_Send_TX_2(data send)     //Function to send data Value to a specify RX Address
 {
 
-  RF_Write_Address_TX_2(P_Add, Code_tay_cam2);
+  RF_Write_Address_TX_2(P_Add);
   CSN=1;
   delay_us(10);
   CSN=0;
@@ -252,17 +249,16 @@ void RF_Send_TX_2(station_info send)     //Function to send data Value to a spec
   CSN=0;
   SPI_RW_TX(0b10100000);
   SPI_RW_TX(send.flag); 
-  SPI_RW_TX(send.light);
-  SPI_RW_TX(send.humi);
-  SPI_RW_TX(send.temp);
-  SPI_RW_TX(send.sm);
-  SPI_RW_TX(send.water);
+  SPI_RW_TX(send.a);
+  SPI_RW_TX(send.b);
+  SPI_RW_TX(send.c);
+  SPI_RW_TX(send.d);
   CSN=1;
   CE=1;
   delay_us(500);
   CE=0;
   RF_Write_TX(0x07,0b01111110);
-  RF_Write_Address_TX_2(P_Add, Code_tay_cam2);
+  RF_Write_Address_TX_2(P_Add);
   RF_Command_TX(0b11100001);  
   
   /*status = RF_Write_TX(0x07,0b00111000); //0b00111000
@@ -467,8 +463,7 @@ void RF_Read_RX_3()                                         //Function to read t
    station_receive.light = SPI_Read_RX();
    station_receive.humi = SPI_Read_RX();
    station_receive.temp = SPI_Read_RX();
-   station_receive.sm = SPI_Read_RX();  
-   station_receive.water = SPI_Read_RX();
+   station_receive.sm = SPI_Read_RX();
    CSN=1; 
    CE=1;
    RF_Write_RX(0x07,0b01111110);  // Clear flag

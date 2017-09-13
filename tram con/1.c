@@ -50,7 +50,7 @@ return ADCW;
 #define MISO PIND.1
 #define IRQ PINB.7
 unsigned char P_Add=0xA1, Code_tay_cam1, Code_tay_cam2, Code_tay_cam3, Code_tay_cam4;
-#include <nrf_code.h> 
+#include "nrf_code.c" 
 
 station_info data_send;
 
@@ -239,10 +239,11 @@ glcd_init_data.vlcd=69;
 glcd_init(&glcd_init_data);
 PORTC.5 = 0;
 
-config();
+
 RF_Init_RX();
+config();
 RF_Config_TX();
-RF_Mode_TX(); 
+
 border();
 while (1){     
         if(DHT_GetTemHumi(&dht_nhiet_do,&dht_do_am)){
@@ -252,7 +253,8 @@ while (1){
             sprintf(buff, "%u  ", (unsigned int)dht_nhiet_do);
             glcd_moveto(50, 18);
             glcd_outtext(buff); 
-        }          
+        } 
+        RF_Mode_TX();          
         
         set_up_sieu_am(); 
         glcd_moveto(50, 37); 
@@ -266,7 +268,7 @@ while (1){
         //sprintf(buff, "%d ", (int)read_adc(6)/3);
         //glcd_outtext(buff);
         
-        
+        data_send.flag = 1;
         if((int)read_adc(6)/3 < 200){
             data_send.light = 1;
             glcd_outtext("Rain ");     
@@ -276,16 +278,14 @@ while (1){
             glcd_outtext("Sun ");
         }      
       
-        data_send.flag = 1;
+       // data_send.light = 100;
         data_send.temp = (long int)dht_nhiet_do;
         data_send.humi = (long int)dht_do_am;
         
         data_send.sm = (long int)read_adc(7)/4;
-        data_send.water = (long int)distance;  
+       // data_send.sm = (long int)distance;  
       
-        RF_Send_TX(data_send);
-
+        RF_Send_TX(data_send);  
         delay_ms(200);
-
         }
 }
